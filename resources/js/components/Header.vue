@@ -12,181 +12,77 @@
                         +84 3456.940.88
                     </div>
                 </div>
-                <div class="items-end flex py-4">
-                    <div class="top-social line-space-right pr-5 gap-2 flex">
+                <div class="items-end flex">
+                    <div class="top-social line-space-right pr-5 gap-2 flex py-4">
                         <a href="#"><font-awesome-icon :icon="['fab', 'facebook']" /></a>
                         <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
                         <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
                     </div>
-                    <a href="#" class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5"><font-awesome-icon :icon="['fas', 'user']" />Đăng Nhập</a>
-                    <a href="#" class="login-panel pl-5 flex gap-2 items-center"><font-awesome-icon :icon="['fas', 'user-plus']" />Đăng Ký</a>
+                    <a href="#"
+                        class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4"><font-awesome-icon
+                            :icon="['fas', 'user']" />Đăng Nhập</a>
+                    <a href="#" class="login-panel pl-5 flex gap-2 items-center py-4"><font-awesome-icon
+                            :icon="['fas', 'user-plus']" />Đăng Ký</a>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="./index.html">
-                                <img src="img/logo.png" alt="">
-                            </a>
+        <div class="header-mid w-full">
+            <div class="container py-10 flex flex-row flex-wrap justify-between m-auto">
+                <div class="flex-1 text-center justify-center">
+                    <div class="flex h-full items-center justify-center">
+                        <a href="/">
+                            <p>Logo</p>
+                            <!-- <img src="img/logo.png" alt=""> -->
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-auto">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                         </div>
+                        <input type="search" id="default-search"
+                            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
+                            placeholder="Tìm Tên Tool" required>
+                        <button type="submit"
+                            class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Tìm</button>
                     </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 text-right col-md-3">
-                        <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon">
-                                <a href="#">
-                                    <i class="icon_bag_alt"></i>
-                                    <span>3</span>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-price">$150.00</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="flex-1 text-center">
+                    <a class="flex h-full items-center justify-center" href="#">
+                        <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+                        <span>3</span>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>All departments</span>
-                        <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
+        <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <button data-collapse-toggle="navbar-solid-bg" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-solid-bg" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <font-awesome-icon :icon="['fas', 'bars']" />
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+                    <ul
+                        class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                                aria-current="page">Trang Chủ</a>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                                <li><a href="./register.html">Register</a></li>
-                                <li><a href="./login.html">Login</a></li>
-                            </ul>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tool</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Liên Hệ</a>
                         </li>
                     </ul>
-                </nav>
-                <div id="mobile-menu-wrap">
-                    <div class="slicknav_menu"><a href="#" aria-haspopup="true" role="button" tabindex="0"
-                            class="slicknav_btn slicknav_collapsed"><span class="slicknav_menutxt">MENU</span><span
-                                class="slicknav_icon"><span class="slicknav_icon-bar"></span><span
-                                    class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a>
-                    <nav class="slicknav_nav slicknav_hidden" style="display: none;" aria-hidden="true" role="menu">
-                        <ul>
-                            <li class="active"><a href="./index.html" role="menuitem">Home</a></li>
-                            <li><a href="./shop.html" role="menuitem">Shop</a></li>
-                            <li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem"
-                                    aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row"><a
-                                        href="#">Collection</a>
-                                    <span class="slicknav_arrow">►</span></a>
-                                <ul class="dropdown slicknav_hidden" role="menu" style="display: none;"
-                                    aria-hidden="true">
-                                    <li><a href="#" role="menuitem" tabindex="-1">Men's</a></li>
-                                    <li><a href="#" role="menuitem" tabindex="-1">Women's</a></li>
-                                    <li><a href="#" role="menuitem" tabindex="-1">Kid's</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html" role="menuitem">Blog</a></li>
-                            <li><a href="./contact.html" role="menuitem">Contact</a></li>
-                            <li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem"
-                                    aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row"><a
-                                        href="#">Pages</a>
-                                    <span class="slicknav_arrow">►</span></a>
-                                <ul class="dropdown slicknav_hidden" role="menu" style="display: none;"
-                                    aria-hidden="true">
-                                    <li><a href="./blog-details.html" role="menuitem" tabindex="-1">Blog Details</a>
-                                    </li>
-                                    <li><a href="./shopping-cart.html" role="menuitem" tabindex="-1">Shopping Cart</a>
-                                    </li>
-                                    <li><a href="./check-out.html" role="menuitem" tabindex="-1">Checkout</a></li>
-                                    <li><a href="./faq.html" role="menuitem" tabindex="-1">Faq</a></li>
-                                    <li><a href="./register.html" role="menuitem" tabindex="-1">Register</a></li>
-                                    <li><a href="./login.html" role="menuitem" tabindex="-1">Login</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
-        </div>
-    </div>
-</header></template>
+        </nav>
+    </header>
+</template>

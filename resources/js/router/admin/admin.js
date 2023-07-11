@@ -1,12 +1,12 @@
 const admin = [
     {
         path: "/admin",
-        component: () => import("../layouts/admin.vue"),
+        component: () => import("../../layouts/admin.vue"),
         children: [
             {
                 path: "users",
                 name: "admin.users",
-                component: () => import("../pages/admin/users/index.vue"),
+                component: () => import("../../pages/admin/users/index.vue"),
             }
         ]
     }

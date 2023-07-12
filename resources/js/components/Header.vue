@@ -1,28 +1,30 @@
 <template>
     <header class="header-section">
         <div class="header-top">
-            <div class="container flex flex-row justify-around">
-                <div class="flex flex-row">
-                    <div class="py-4 pr-5 line-space-right">
-                        <font-awesome-icon :icon="['fas', 'envelope']" />
-                        ndviet.dev@gmail.com
+            <div class="container m-auto">
+                <div class="flex flex-row justify-around">
+                    <div class="flex flex-row">
+                        <div class="py-4 pr-5 line-space-right">
+                            <font-awesome-icon :icon="['fas', 'envelope']" />
+                            ndviet.dev@gmail.com
+                        </div>
+                        <div class="py-4 pl-5">
+                            <font-awesome-icon :icon="['fas', 'phone']" />
+                            +84 3456.940.88
+                        </div>
                     </div>
-                    <div class="py-4 pl-5">
-                        <font-awesome-icon :icon="['fas', 'phone']" />
-                        +84 3456.940.88
+                    <div class="items-end flex">
+                        <div class="top-social line-space-right pr-5 gap-2 flex py-4">
+                            <a href="#"><font-awesome-icon :icon="['fab', 'facebook']" /></a>
+                            <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
+                            <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
+                        </div>
+                        <a href="#"
+                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4"><font-awesome-icon
+                                :icon="['fas', 'user']" />Đăng Nhập</a>
+                        <a href="#" class="login-panel pl-5 flex gap-2 items-center py-4"><font-awesome-icon
+                                :icon="['fas', 'user-plus']" />Đăng Ký</a>
                     </div>
-                </div>
-                <div class="items-end flex">
-                    <div class="top-social line-space-right pr-5 gap-2 flex py-4">
-                        <a href="#"><font-awesome-icon :icon="['fab', 'facebook']" /></a>
-                        <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
-                        <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
-                    </div>
-                    <a href="#"
-                        class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4"><font-awesome-icon
-                            :icon="['fas', 'user']" />Đăng Nhập</a>
-                    <a href="#" class="login-panel pl-5 flex gap-2 items-center py-4"><font-awesome-icon
-                            :icon="['fas', 'user-plus']" />Đăng Ký</a>
                 </div>
             </div>
         </div>

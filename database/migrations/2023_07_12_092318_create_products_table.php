@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string("product_info");
             $table->string("product_img")->nullable();
             $table->string("product_vid")->nullable();
+            $table->string("product_information")->nullable();
+            $table->integer("product_view")->default(0);
+            $table->integer("product_bought")->default(0);
+            $table->foreignId('type_id')->constrained('type_product');
+            $table->integer("is_show");
             $table->timestamps();
         });
     }

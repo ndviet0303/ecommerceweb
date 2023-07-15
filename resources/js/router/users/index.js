@@ -5,7 +5,7 @@ const user = [
         children: [
             {
                 path: "/",
-                name: "users.index",
+                name: "Home",
                 component: () => import("../../pages/users/index.vue"),
             }
         ]

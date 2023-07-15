@@ -1,7 +1,11 @@
 <template>
-    <HeaderVue />
-    <router-view></router-view>
-    <Footer />
+    <body class="flex flex-col min-h-screen">
+        <HeaderVue />
+        <main class="flex-1">
+            <router-view></router-view>
+        </main>
+        <Footer />
+    </body>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 const user = [
     {
         path: "/",
-        component: () => import("../../layouts/users/index.vue"),
+        component: () => import("../../layouts/default.vue"),
         children: [
             {
                 path: "/",

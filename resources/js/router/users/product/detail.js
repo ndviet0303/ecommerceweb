@@ -1,7 +1,7 @@
 const product_details = [
     {
         path: "/product",
-        component: () => import("../../../layouts/users/index.vue"),
+        component: () => import("../../../layouts/default.vue"),
         children: [
             {
                 path: "detail/:id",

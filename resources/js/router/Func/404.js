@@ -1,7 +1,7 @@
 const notFound = [
     {
         path: "/:pathMatch(.*)*",
-        component: () => import("../../pages/func/404.vue"),
+        component: () => import(/* webpackChunkName: "func" */"../../pages/func/404.vue"),
     },
 ]
 

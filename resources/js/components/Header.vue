@@ -19,11 +19,14 @@
                             <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
                             <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
                         </div>
-                        <a href="#"
-                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4"><font-awesome-icon
-                                :icon="['fas', 'user']" />Đăng Nhập</a>
-                        <a href="#" class="login-panel pl-5 flex gap-2 items-center py-4"><font-awesome-icon
-                                :icon="['fas', 'user-plus']" />Đăng Ký</a>
+                        <router-link :to="{ name: 'login' }"
+                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
+                            <font-awesome-icon :icon="['fas', 'user']" />
+                            Đăng Nhập</router-link>
+                        <router-link :to="{ name: 'register' }"
+                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
+                            <font-awesome-icon :icon="['fas', 'user-plus']" />
+                            Đăng Ký</router-link>
                     </div>
                 </div>
             </div>

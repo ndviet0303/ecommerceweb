@@ -4,14 +4,14 @@
             <div class="container m-auto">
                 <div class="flex flex-row justify-around">
                     <div class="flex flex-row">
-                        <div class="py-4 pr-5 line-space-right">
+                        <a href="mailto:ndviet.dev@gmail.com" class="py-4 pr-5 line-space-right">
                             <font-awesome-icon :icon="['fas', 'envelope']" />
                             ndviet.dev@gmail.com
-                        </div>
-                        <div class="py-4 pl-5">
+                        </a>
+                        <a href="tel:+84345694088" class="py-4 pl-5">
                             <font-awesome-icon :icon="['fas', 'phone']" />
                             +84 3456.940.88
-                        </div>
+                        </a>
                     </div>
                     <div class="items-end flex">
                         <div class="top-social line-space-right pr-5 gap-2 flex py-4">
@@ -19,14 +19,19 @@
                             <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
                             <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
                         </div>
-                        <router-link :to="{ name: 'login' }"
-                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
-                            <font-awesome-icon :icon="['fas', 'user']" />
-                            Đăng Nhập</router-link>
-                        <router-link :to="{ name: 'register' }"
-                            class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
-                            <font-awesome-icon :icon="['fas', 'user-plus']" />
-                            Đăng Ký</router-link>
+                        <div v-if="!isAuthenticated">
+                            <router-link :to="{ name: 'login' }"
+                                class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
+                                <font-awesome-icon :icon="['fas', 'user']" />
+                                Đăng Nhập</router-link>
+                            <router-link :to="{ name: 'register' }"
+                                class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
+                                <font-awesome-icon :icon="['fas', 'user-plus']" />
+                                Đăng Ký </router-link>
+                        </div>
+                        <div v-else>
+                            {{ user.value.name }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,3 +97,40 @@
         </nav>
     </header>
 </template>
+
+<script>
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+export default {
+    setup() {
+        const user = ref(null);
+        const token = ref(null);
+        const router = useRouter();
+        const store = useStore();
+        user.value = computed(() => store.state.user);
+        token.value = computed(() => store.state.token);
+        const isAuthenticated = computed(() => !!user.value && !!token.value);
+        const logout = async () => {
+            axios.post('/api/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${store.state.token}`,
+                },
+            })
+                .then(response => {
+                    store.dispatch('clearUser');
+                    store.dispatch('clearToken');
+                    router.push({ name: 'Login' });
+                })
+                .catch(error => {
+                    console.error('Đăng xuất không thành công:', error);
+                });
+        };
+        return {
+            user,
+            isAuthenticated,
+            logout
+        };
+    }
+};
+</script>

@@ -52,32 +52,51 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref } from "vue";
+import { useStore } from "vuex"; 
+import router from "../../../router";
+
+const store = useStore(); 
 
 const success = reactive({
     status: false,
     message: "Đăng Nhập Thành Công",
-})
+});
 
 const error = reactive({
     status: false,
     message: "",
-})
+});
 
 const formData = reactive({
     email: "",
     password: "",
     remember: false,
-})
+});
 
 const isLoading = ref(false);
 
 
-async function submitForm() {
-    const response = await axios.post('/api/login', {
-        email: formData.email,
-        password: formData.password,
-    });
+const isLoggingIn = ref(false);
 
-    console.log(response.data);
+async function submitForm() {
+    if (isLoggingIn.value) return;
+    try {
+        isLoggingIn.value = true;
+        const response = await axios.post('/api/login', {
+            email: formData.email,
+            password: formData.password,
+        });
+        if (response.status === 200) {
+            store.dispatch('setUser', response.data.user);
+            store.dispatch('setToken', response.data.token);
+            router.push({ name: 'Home' });
+        } else {
+            console.error('Login failed: Invalid response status');
+        }
+    } catch (err) {
+        console.error('Login failed:', err.message);
+    } finally {
+        isLoggingIn.value = false;
+    }
 }
 </script>

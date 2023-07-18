@@ -1,22 +1,26 @@
-// src/store/index.js
 import { createStore } from 'vuex';
+
 const store = createStore({
     state: {
-        user: null, // Thông tin người dùng đã đăng nhập
-        token: null // Token của người dùng đã đăng nhập
+        user: JSON.parse(localStorage.getItem('user')) || null,
+        token: localStorage.getItem('token') || null
     },
     mutations: {
         SET_USER(state, user) {
             state.user = user;
+            localStorage.setItem('user', JSON.stringify(user));
         },
         SET_TOKEN(state, token) {
             state.token = token;
+            localStorage.setItem('token', token);
         },
         CLEAR_USER(state) {
             state.user = null;
+            localStorage.removeItem('user');
         },
         CLEAR_TOKEN(state) {
             state.token = null;
+            localStorage.removeItem('token');
         }
     },
     actions: {

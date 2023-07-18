@@ -18,7 +18,6 @@ class registerController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6',
             'token' => 'required|string',
-            'username' => 'required|string|max:255|unique:users',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);

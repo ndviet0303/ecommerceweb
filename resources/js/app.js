@@ -12,10 +12,12 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 library.add(fas, fab, far)
 
+import store from './store/user';
 
 const app = createApp(App);
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(router);
+app.use(store);
 app.mount("#app");
 
 // require('../css/app.css');

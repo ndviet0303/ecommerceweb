@@ -21,12 +21,6 @@
                         placeholder="Nguyễn Văn A" required>
                 </div>
                 <div class="mb-6">
-                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Tên Đăng Nhập</label>
-                    <input type="username" id="username" v-model="formData.username"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="zietdev" required autocomplete="username">
-                </div>
-                <div class="mb-6">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
                     <input type="email" id="email" v-model="formData.email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -61,7 +55,6 @@ export default defineComponent({
     setup() {
         const formData = reactive({
             name: "",
-            username: "",
             email: "",
             password: "",
         });
@@ -80,21 +73,29 @@ export default defineComponent({
             const token = await getToken();
             const data = {
                 name: formData.name,
-                username: formData.username,
                 email: formData.email,
                 password: formData.password,
                 token: token,
             };
-            const response = await axios.post("/api/register", data);
-            console.log(response);
-            if (response.data.success) {
-                success.status = true;
-                isLoading.value = false;
-                this.$router.push({ name: 'login' });
+            console.log(data);
+            try {
+                const response = await axios.post("/api/register", data);
+                console.log(response);
+                if (response.data.success) {
+                    success.status = true;
+                    isLoading.value = false;
+                    // this.$router.push({ name: 'login' });
+                }
+                else {
+                    error.status = true;
+                    error.message = response.data.errors;
+                    isLoading.value = false;
+                }
+
             }
-            else {
+            catch (err) {
                 error.status = true;
-                error.message = response.data.errors;
+                error.message = err.message;
                 isLoading.value = false;
             }
         }

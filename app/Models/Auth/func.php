@@ -2,6 +2,7 @@
 
 namespace App\Models\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -36,7 +37,6 @@ class func extends Model
     {
         $user = User::create([
             'name' => $request->input('name'),
-            'username' => $request->input('username'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
         ]);

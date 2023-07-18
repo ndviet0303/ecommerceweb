@@ -12,7 +12,7 @@ class loginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->input('remember'))) {
             $user = Auth::user();
             $token = $user->createToken('acc-Token');
             $token = $token->plainTextToken;

@@ -85,6 +85,7 @@ async function submitForm() {
         const response = await axios.post('/api/login', {
             email: formData.email,
             password: formData.password,
+            remember: formData.remember,
         });
         if (response.status === 200) {
             store.dispatch('setUser', response.data.user);

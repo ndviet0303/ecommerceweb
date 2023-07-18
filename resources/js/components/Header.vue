@@ -29,8 +29,13 @@
                                 <font-awesome-icon :icon="['fas', 'user-plus']" />
                                 Đăng Ký </router-link>
                         </div>
-                        <div v-else>
-                            {{ user.value.name }}
+                        <div v-else class="dropdown pl-5 pr-5 py-4">
+                            <button> {{ user.value.name + ' ' + user.value.cash + 'đ ' }}<font-awesome-icon
+                                    :icon="['fas', 'caret-down']" /></button>
+                            <div class="dropdown-content capitalize">
+                                <a href="#">tT tài khoản</a>
+                                <a href="#">đăng xuất</a>
+                            </div>
                         </div>
                     </div>
                 </div>

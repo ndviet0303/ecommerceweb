@@ -19,7 +19,7 @@
                             <a href="https://github.com/ndviet0303"><font-awesome-icon :icon="['fab', 'github']" /></a>
                             <a href="https://t.me/+84345694088"><font-awesome-icon :icon="['fab', 'telegram']" /></a>
                         </div>
-                        <div v-if="!isAuthenticated">
+                        <div v-if="!isAuthorized" class="flex">
                             <router-link :to="{ name: 'login' }"
                                 class="login-panel pl-5 flex gap-2 items-center line-space-right pr-5 py-4">
                                 <font-awesome-icon :icon="['fas', 'user']" />
@@ -30,11 +30,11 @@
                                 Đăng Ký </router-link>
                         </div>
                         <div v-else class="dropdown pl-5 pr-5 py-4">
-                            <button> {{ user.value.name + ' ' + user.value.cash + 'đ ' }}<font-awesome-icon
+                            <button> {{ user.name + ' ' + user.cash + 'đ ' }}<font-awesome-icon
                                     :icon="['fas', 'caret-down']" /></button>
                             <div class="dropdown-content capitalize">
                                 <a href="#">tT tài khoản</a>
-                                <a href="#">đăng xuất</a>
+                                <a href="#" @click="logout">đăng xuất</a>
                             </div>
                         </div>
                     </div>
@@ -93,6 +93,11 @@
                         </li>
                         <li>
                             <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Nạp
+                                Tiền</a>
+                        </li>
+                        <li>
+                            <a href="#"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Liên
                                 Hệ</a>
                         </li>
@@ -107,33 +112,32 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 export default {
     setup() {
-        const user = ref(null);
-        const token = ref(null);
         const router = useRouter();
         const store = useStore();
-        user.value = computed(() => store.state.user);
-        token.value = computed(() => store.state.token);
-        const isAuthenticated = computed(() => !!user.value && !!token.value);
+        const user = computed(() => store.state.user);
+        const token = computed(() => store.state.token);
+        const isAuthorized = computed(() => user.value !== null && token.value !== null);
         const logout = async () => {
             axios.post('/api/logout', {}, {
                 headers: {
-                    Authorization: `Bearer ${store.state.token}`,
-                },
-            })
-                .then(response => {
-                    store.dispatch('clearUser');
-                    store.dispatch('clearToken');
-                    router.push({ name: 'Login' });
-                })
-                .catch(error => {
-                    console.error('Đăng xuất không thành công:', error);
-                });
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(response => {
+                // Remove the token from local storage and redirect to the login page
+                store.dispatch('clearUser');
+                store.dispatch('clearToken');
+                router.push('/login'); // Replace '/login' with your login page route
+            }).catch(error => {
+                console.error(error);
+            });
         };
         return {
             user,
-            isAuthenticated,
+            isAuthorized,
             logout
         };
     }

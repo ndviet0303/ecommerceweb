@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-
+import { reactive} from 'vue';
 const store = createStore({
     state: {
         user: JSON.parse(localStorage.getItem('user')) || null,

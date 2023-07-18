@@ -52,10 +52,10 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref } from "vue";
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 import router from "../../../router";
 
-const store = useStore(); 
+const store = useStore();
 
 const success = reactive({
     status: false,

@@ -3,7 +3,8 @@ import { reactive} from 'vue';
 const store = createStore({
     state: {
         user: JSON.parse(localStorage.getItem('user')) || null,
-        token: localStorage.getItem('token') || null
+        token: localStorage.getItem('token') || null,
+        isAuthenticated: false,
     },
     mutations: {
         SET_USER(state, user) {
@@ -21,7 +22,10 @@ const store = createStore({
         CLEAR_TOKEN(state) {
             state.token = null;
             localStorage.removeItem('token');
-        }
+        },
+        SET_AUTHENTICATED(state, value) {
+            state.isAuthenticated = value;
+          },
     },
     actions: {
         setUser({ commit }, user) {

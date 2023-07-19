@@ -6,6 +6,7 @@ import product_details from "./users/product/detail";
 import notFound from "./Func/404";
 import register from "./users/auth/register";
 import login from "./users/auth/login";
+import deposit from './Func/deposit';
 
 const routes = [...admin,
 ...user,
@@ -13,7 +14,8 @@ const routes = [...admin,
 ...notFound,
 ...products,
 ...register,
-...login];
+...login,
+...deposit];
 
 const router = createRouter({
     history: createWebHistory(),

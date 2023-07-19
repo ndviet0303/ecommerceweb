@@ -27,4 +27,5 @@ Route::get("/Allproducts", [ProductController::class, 'showAllProduct']);
 Route::get("/product/{id}", [ProductController::class, 'productInfo']);
 Route::post("/register", [registerController::class, 'register']);
 Route::post("/login", [loginController::class, 'login']);
+Route::middleware('auth:sanctum')->get('/check-login', [loginController::class, 'checkLogin']);
 Route::middleware('auth:sanctum')->post('/logout', [loginController::class, 'logout']);

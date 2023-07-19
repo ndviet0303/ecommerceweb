@@ -93,9 +93,10 @@
                                 :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'products' }">Tool</router-link>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent">Nạp
-                                Tiền</a>
+                            <router-link :to="{ name: 'deposit' }"
+                                class="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
+                                :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'products' }">Nạp
+                                Tiền</router-link>
                         </li>
                         <li>
                             <a href="#"

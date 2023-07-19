@@ -33,4 +33,8 @@ class loginController extends Controller
     {
         return response()->json(['user' => $request->user()]);
     }
+    public function checkLogin()
+    {
+        return response()->json(['authenticated' => 'true']);
+    }
 }

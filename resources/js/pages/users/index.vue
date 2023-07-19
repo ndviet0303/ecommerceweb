@@ -31,6 +31,13 @@
                                         }}</span>
                                     </li>
                                 </ul>
+                                <div>
+                                    <!-- <span class="text-cyan-500"> Người Bán {{ product.product_author }}</span> -->
+                                    <div class="flex flex-row justify-between text-purple-400">
+                                        <span>Lượt Mua :{{ product.product_bought }}</span>
+                                        <span>Lượt Xem :{{ product.product_view }}</span>
+                                    </div>
+                                </div>
                                 <router-link class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none
                                         focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full
                                         text-center" :to="{ name: 'product.detail', params: { id: product.id } }">

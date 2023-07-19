@@ -1,7 +1,14 @@
 const products = [
     {
-        path: "/products",
-        component: () => import("../../../pages/users/product/all.vue"),
+        path: "/",
+        component: () => import("../../../layouts/default.vue"),
+        children: [
+            {
+                path: "/products",
+                name: "products",
+                component: () => import("../../../pages/users/product/all.vue"),
+            },
+        ]
     },
 ]
 

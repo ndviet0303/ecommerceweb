@@ -80,11 +80,10 @@ export default defineComponent({
             console.log(data);
             try {
                 const response = await axios.post("/api/register", data);
-                console.log(response);
                 if (response.data.success) {
                     success.status = true;
                     isLoading.value = false;
-                    // this.$router.push({ name: 'login' });
+                    this.$router.push({ name: 'login' });
                 }
                 else {
                     error.status = true;

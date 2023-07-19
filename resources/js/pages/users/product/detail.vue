@@ -66,9 +66,10 @@ export default defineComponent({
                 this.loading = false;
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.message);
                 this.loading = false;
             });
+
     },
     methods: {
         formatPrice(price) {

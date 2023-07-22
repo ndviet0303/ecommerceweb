@@ -15,8 +15,9 @@
                 </div>
             </div>
 
-            <button
-                class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-3xl px-4 py-2 ">Mua
+            <button @click="addToCart(product)"
+                class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-3xl px-4 py-2 ">Thêm
+                Vào Giỏ Hàng
             </button>
 
 
@@ -47,38 +48,36 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-export default defineComponent({
-    data() {
-        return {
-            product: Array,
-            loading: Boolean,
-        };
-    },
-    created() {
-        this.loading = true;
-        fetch("/api/product/" + this.$route.params.id)
-            .then((response) => response.json())
-            .then((data) => {
-                this.product = data;
-                this.loading = false;
-            })
-            .catch((error) => {
-                console.log(error.message);
-                this.loading = false;
-            });
+const store = useStore();
+const route = useRoute();
 
-    },
-    methods: {
-        formatPrice(price) {
-            // Use toLocaleString() to format the price
-            return price.toLocaleString('vi-VN', {
-                style: 'currency',
-                currency: 'VND', // Change the currency code as per your requirement
-            });
-        },
-    },
-})
+const product = ref(null);
+const loading = ref(true);
+
+fetch("/api/product/" + route.params.id)
+    .then((response) => response.json())
+    .then((data) => {
+        product.value = data;
+        loading.value = false;
+    })
+    .catch((error) => {
+        console.log(error.message);
+        loading.value = false;
+    });
+
+function formatPrice(price) {
+    return price.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+}
+
+function addToCart(product) {
+    store.dispatch('addToCart', product);
+}
 </script>

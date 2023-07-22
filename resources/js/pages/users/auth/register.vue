@@ -77,7 +77,6 @@ export default defineComponent({
                 password: formData.password,
                 token: token,
             };
-            console.log(data);
             try {
                 const response = await axios.post("/api/register", data);
                 if (response.data.success) {

@@ -12,10 +12,16 @@
         width: 100%;
     }
 
+    .borderBox{
+        border: 1px solid #a5a4a4;
+    }
+
     .line-space-right {
         border-right: 1px solid #a5a4a4;
     }
-
+    .line-space-bot {
+        border-bottom: 1px solid #a5a4a4;
+    }
     .dropdown {
         position: relative;
         display: inline-block;
@@ -48,4 +54,13 @@
     .dropdown:hover .dropbtn {
         background-color: #3e8e41;
     }
+
+    .title{
+        text-transform: capitalize;
+        text-align: center;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 1;
+        padding: 15px;
+    }   
 }

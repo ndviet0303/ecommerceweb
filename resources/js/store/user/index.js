@@ -1,10 +1,21 @@
 import { createStore } from 'vuex';
-import { reactive} from 'vue';
+import { reactive } from 'vue';
+import createPersistedState from 'vuex-persistedstate';
+
 const store = createStore({
     state: {
         user: JSON.parse(localStorage.getItem('user')) || null,
         token: localStorage.getItem('token') || null,
-        isAuthenticated: false,
+        cartItems: [],
+    },
+    getters: {
+        isAuthenticated: (state) => state.isAuthenticated,
+        cartItemCount(state) {
+            return state.cartItems.reduce((total, product) => total + product.quantity, 0);
+        },
+        getCartItems(state) {
+            return state.cartItems;
+        }
     },
     mutations: {
         SET_USER(state, user) {
@@ -23,9 +34,24 @@ const store = createStore({
             state.token = null;
             localStorage.removeItem('token');
         },
-        SET_AUTHENTICATED(state, value) {
-            state.isAuthenticated = value;
-          },
+        addToCart(state, item) {
+            state.cartItems.push(item);
+        },
+        addQuantityCartItem(state, { index }) {
+            state.cartItems[index].quantity++;
+        },
+        reduceQuantityCartItem(state, { index }) {
+            state.cartItems[index].quantity--;
+        },
+        updateFromCart(state, { item, index }) {
+            state.cartItems[index].quantity = item.quantity;
+        },
+        removeFromCart(state, itemId) {
+            state.cartItems = state.cartItems.filter(item => item.id !== itemId);
+        },
+        clearCart(state) {
+            state.cartItems = [];
+        },
     },
     actions: {
         setUser({ commit }, user) {
@@ -39,8 +65,42 @@ const store = createStore({
         },
         clearToken({ commit }) {
             commit('CLEAR_TOKEN');
-        }
-    }
+        },
+        addToCart({ commit, state }, item) {
+            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            if (existingItem) {
+                const existingItemIndex = state.cartItems.findIndex(cartItem => cartItem.id === item.id);
+                commit('addQuantityCartItem', { index: existingItemIndex });
+            } else {
+                item.quantity = 1;
+                commit('addToCart', item);
+            }
+        },
+        reduceQuantityCartItem({ commit, state }, item) {
+            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            if (existingItem.quantity > 1) {
+                const existingItemIndex = state.cartItems.findIndex(cartItem => cartItem.id === item.id);
+                commit('reduceQuantityCartItem', { index: existingItemIndex });
+            } else if (existingItem.quantity == 1) {
+                commit('removeFromCart', item.id);
+            }
+        },
+        updateFromCart({ commit,state }, item) {
+            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            console.log(existingItem);
+            if (existingItem) {
+                const existingItemIndex = state.cartItems.findIndex(cartItem => cartItem.id === item.id);
+                commit('updateFromCart', { item: item, index: existingItemIndex });
+            }
+        },
+        removeFromCart({ commit }, itemId) {
+            commit('removeFromCart', itemId);
+        },
+        clearCart({ commit }) {
+            commit('clearCart');
+        },
+    },
+    plugins: [createPersistedState()],
 });
 
 export default store;

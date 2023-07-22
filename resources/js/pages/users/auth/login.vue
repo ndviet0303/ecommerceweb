@@ -5,12 +5,7 @@
             <span class="text-green-600 capitalize">{{ success.message }}</span>
         </ul>
         <ul class="error flex flex-col gap-2" v-if="error.status">
-            <span class="text-red-600 capitalize">Có Lỗi Xảy Ra : </span>
-            <div v-for="(err, index) in error.message" :key="index">
-                <li class="text-red-600 capitalize" v-for="(errMess, indexes) in err" :key="indexes">
-                    - {{ errMess }}
-                </li>
-            </div>
+            <span class="text-red-600 capitalize">đăng nhập ko thành công: {{ error.message }}</span>
         </ul>
         <form @submit.prevent="submitForm">
             <div class="mt-5">
@@ -95,8 +90,10 @@ async function submitForm() {
             console.error('Login failed: Invalid response status');
         }
     } catch (err) {
-        console.error('Login failed:', err.message);
+        error.status = true;
+        error.message = err.message;
     } finally {
+
         isLoggingIn.value = false;
     }
 }

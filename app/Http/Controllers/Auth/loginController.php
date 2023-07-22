@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +14,11 @@ class loginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->input('remember'))) {
-            $user = Auth::user();
-            $token = $user->createToken('acc-Token');
+            $user = User::join('role as r', 'users.user_role', '=', 'r.id')
+                ->where('users.id', Auth::user()->id)
+                ->select('users.*', 'r.name as role_name')
+                ->first();
+            $token = Auth::user()->createToken('acc-Token');
             $token = $token->plainTextToken;
             return response()->json(['token' => $token, 'user' => $user]);
         } else {
@@ -33,8 +37,9 @@ class loginController extends Controller
     {
         return response()->json(['user' => $request->user()]);
     }
-    public function checkLogin()
+
+    public function checkLogin(Request $request)
     {
-        return response()->json(['authenticated' => 'true']);
+        return response()->json(['authenticated' => true]);
     }
 }

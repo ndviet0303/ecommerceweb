@@ -33,8 +33,10 @@
                             <button> {{ user.name + ' ' + user.cash + 'đ ' }}<font-awesome-icon
                                     :icon="['fas', 'caret-down']" /></button>
                             <div class="dropdown-content capitalize">
-                                <a href="#">tT tài khoản</a>
+                                <router-link :to="{ name: 'information' }">tT tài khoản</router-link>
+                                <router-link :to="{ name: 'changepass' }">đổi mật khẩu</router-link>
                                 <a href="#" @click="logout">đăng xuất</a>
+                                <router-link v-if="user.role >= 2" :to="{ name: 'Home' }">Admin</router-link>
                             </div>
                         </div>
                     </div>
@@ -46,7 +48,7 @@
                 <div class="flex-1 text-center justify-center">
                     <div class="flex h-full items-center justify-center">
                         <a href="/">
-                            <p>Logo</p>
+                            <p class="text-5xl">Logo</p>
                             <!-- <img src="img/logo.png" alt=""> -->
                         </a>
                     </div>
@@ -64,10 +66,10 @@
                     </div>
                 </div>
                 <div class="flex-1 text-center">
-                    <a class="flex h-full items-center justify-center" href="#">
+                    <router-link :to="{ name: 'cart' }" class="flex h-full items-center justify-center" href="#">
                         <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-                        <span>3</span>
-                    </a>
+                        <span>Giỏ Hàng Hiện Có :{{ cartItemCount }}</span>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -83,7 +85,7 @@
                     <ul
                         class="flex flex-col font-medium mt-4 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  bg-gray-800 md:bg-transparent border-gray-700">
                         <li>
-                            <router-link :to="{ name: 'Home' }" class="block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                            <router-link :to="{ name: 'Home' }" class="block py-2 pl-3 pr-4 text-white rounded md:p-0 md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
                                 :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'Home' }">Trang
                                 Chủ</router-link>
                         </li>
@@ -95,7 +97,7 @@
                         <li>
                             <router-link :to="{ name: 'deposit' }"
                                 class="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
-                                :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'products' }">Nạp
+                                :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'deposit' }">Nạp
                                 Tiền</router-link>
                         </li>
                         <li>
@@ -123,6 +125,7 @@ export default {
         const user = computed(() => store.state.user);
         const token = computed(() => store.state.token);
         const isAuthorized = computed(() => user.value !== null && token.value !== null);
+        const cartItemCount = computed(() => store.getters['cartItemCount']);
         const logout = async () => {
             axios.post('/api/logout', {}, {
                 headers: {
@@ -140,7 +143,8 @@ export default {
         return {
             user,
             isAuthorized,
-            logout
+            logout,
+            cartItemCount
         };
     },
     computed: {

@@ -62,7 +62,7 @@
                 <div class="mt-2 flex justify-end gap-5">
                     <button @click='clearCartItem' class="text-white bg-red-600 p-2 rounded">Xoá Toàn Bộ Giỏ Hàng</button>
                     <button @click='continueBuy' class="text-white bg-blue-600 p-2 rounded">Tiếp Tục Mua Hàng</button>
-                    <button class="text-white bg-green-600 p-2 rounded">Thanh Toán</button>
+                    <button @click='paid' class="text-white bg-green-600 p-2 rounded">Thanh Toán</button>
                 </div>
             </div>
         </div>
@@ -81,7 +81,6 @@ import router from '../../router';
 const store = useStore();
 // Lấy danh sách sản phẩm trong giỏ hàng từ Vuex store
 const productList = computed(() => store.getters.getCartItems);
-console.log(productList);
 function addToCart(product) {
     store.dispatch('addToCart', product);
 }
@@ -106,6 +105,10 @@ function clearCartItem() {
 
 function continueBuy() {
     router.push({ name: 'Home' });
+}
+
+function paid(){
+    
 }
 
 </script>

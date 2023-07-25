@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,5 +28,14 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Đổi mật khẩu thành công.']);
+    }
+
+    public function user(Request $request)
+    {
+        $user = User::join('role as r', 'users.user_role', '=', 'r.id')
+            ->where('users.id', $request->user()->id)
+            ->select('users.*', 'r.name as role_name')
+            ->first();
+        return response()->json(['user' =>  $user]);
     }
 }

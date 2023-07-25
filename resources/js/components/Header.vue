@@ -30,7 +30,7 @@
                                 Đăng Ký </router-link>
                         </div>
                         <div v-else class="dropdown pl-5 pr-5 py-4">
-                            <button> {{ user.name + ' ' + user.cash + 'đ ' }}<font-awesome-icon
+                            <button> {{ user.name + ' ' + user.cash.toLocaleString() + 'đ ' }}<font-awesome-icon
                                     :icon="['fas', 'caret-down']" /></button>
                             <div class="dropdown-content capitalize">
                                 <router-link :to="{ name: 'information' }">tT tài khoản</router-link>
@@ -85,7 +85,8 @@
                     <ul
                         class="flex flex-col font-medium mt-4 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  bg-gray-800 md:bg-transparent border-gray-700">
                         <li>
-                            <router-link :to="{ name: 'Home' }" class="block py-2 pl-3 pr-4 text-white rounded md:p-0 md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
+                            <router-link :to="{ name: 'Home' }"
+                                class="block py-2 pl-3 pr-4 text-white rounded md:p-0 md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
                                 :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'Home' }">Trang
                                 Chủ</router-link>
                         </li>
@@ -122,24 +123,42 @@ export default {
     setup() {
         const router = useRouter();
         const store = useStore();
-        const user = computed(() => store.state.user);
-        const token = computed(() => store.state.token);
-        const isAuthorized = computed(() => user.value !== null && token.value !== null);
+        const user = computed(() => store.getters['getUserData']);
+        // user = computed(() => store.getters['']);
+        const isAuthorized = computed(() => store.getters['isAuthenticated']);
         const cartItemCount = computed(() => store.getters['cartItemCount']);
         const logout = async () => {
-            axios.post('/api/logout', {}, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            }).then(response => {
-                // Remove the token from local storage and redirect to the login page
-                store.dispatch('clearUser');
-                store.dispatch('clearToken');
-                router.push('/login'); // Replace '/login' with your login page route
-            }).catch(error => {
-                console.error(error);
-            });
+            if (isAuthorized.value) {
+                axios.post('/api/logout', {}, {
+                    headers: {
+                        Authorization: `Bearer ${store.state.token}`
+                    }
+                }).then(response => {
+                    // Remove the token from local storage and redirect to the login page
+                    store.dispatch('clearUser');
+                    store.dispatch('clearToken');
+                    router.push('/login'); // Replace '/login' with your login page route
+                }).catch(error => {
+                    //console.error(error);
+                });
+            }
         };
+
+        const fetchUserData = async () => {
+            if (isAuthorized.value) {
+                await axios.post('/api/user', {}, {
+                    headers: {
+                        Authorization: `Bearer ${store.state.token}`
+                    }
+                }).then((response) => {
+                    store.dispatch('setUser', response.data.user);
+                }).catch(() => {
+                    store.state.isAuthenticated = false;
+                });
+            }
+        };
+
+        onMounted(fetchUserData);
         return {
             user,
             isAuthorized,

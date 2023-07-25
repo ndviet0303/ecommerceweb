@@ -4,35 +4,39 @@ import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
     state: {
-        user: JSON.parse(localStorage.getItem('user')) || null,
-        token: localStorage.getItem('token') || null,
+        user: null,
+        token: null,
         cartItems: [],
     },
     getters: {
-        isAuthenticated: (state) => state.isAuthenticated,
         cartItemCount(state) {
             return state.cartItems.reduce((total, product) => total + product.quantity, 0);
         },
         getCartItems(state) {
             return state.cartItems;
-        }
+        },
+        isAuthenticated: (state) => {
+            // Kiểm tra xem token và người dùng có tồn tại hay không để xác định trạng thái xác thực.
+            return state.token !== null && state.user !== null;
+        },
+        getUserData: state => state.user,
     },
     mutations: {
         SET_USER(state, user) {
             state.user = user;
-            localStorage.setItem('user', JSON.stringify(user));
+            //localStorage.setItem('user', JSON.stringify(user));
         },
         SET_TOKEN(state, token) {
             state.token = token;
-            localStorage.setItem('token', token);
+            //localStorage.setItem('token', token);
         },
         CLEAR_USER(state) {
             state.user = null;
-            localStorage.removeItem('user');
+            //localStorage.removeItem('user');
         },
         CLEAR_TOKEN(state) {
             state.token = null;
-            localStorage.removeItem('token');
+            //localStorage.removeItem('token');
         },
         addToCart(state, item) {
             state.cartItems.push(item);
@@ -85,9 +89,9 @@ const store = createStore({
                 commit('removeFromCart', item.id);
             }
         },
-        updateFromCart({ commit,state }, item) {
+        updateFromCart({ commit, state }, item) {
             const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
-            console.log(existingItem);
+            //console.log(existingItem);
             if (existingItem) {
                 const existingItemIndex = state.cartItems.findIndex(cartItem => cartItem.id === item.id);
                 commit('updateFromCart', { item: item, index: existingItemIndex });

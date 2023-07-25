@@ -7,7 +7,7 @@ const user = [
                 path: "/gio-hang",
                 name: "cart",
                 component: () => import("../../pages/users/cart.vue"),
-                meta: { requiresAuth: true }
+                meta: { requiresAuth: false }
             }
         ]
     }

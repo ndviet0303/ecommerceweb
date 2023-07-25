@@ -33,11 +33,6 @@ class loginController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 
-    public function user(Request $request)
-    {
-        return response()->json(['user' => $request->user()]);
-    }
-
     public function checkLogin(Request $request)
     {
         return response()->json(['authenticated' => true]);

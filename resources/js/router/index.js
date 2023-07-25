@@ -36,6 +36,9 @@ async function checkLogin() {
         });
         return response.data.authenticated;
     } catch (error) {
+        store.dispatch('clearUser');
+        store.dispatch('clearToken');
+        router.push('/login');
         return false;
     }
 }

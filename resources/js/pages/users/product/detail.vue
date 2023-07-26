@@ -7,12 +7,7 @@
             <div class="flex justify-center capitalize text-3xl p-16">
                 <span>giá :</span>
                 <span>{{ formatPrice(product.product_price) }} / </span>
-                <div v-if="product.product_type == 1">
-                    Một Tháng
-                </div>
-                <div v-else>
-                    Vĩnh Viễn
-                </div>
+                {{ getExpirType(product.product_type, productType) }}
             </div>
 
             <button @click="addToCart(product)"
@@ -52,18 +47,20 @@
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { useFunction } from '../../../lib/function';
 
 const store = useStore();
 const route = useRoute();
-
+const { getExpirType }  = useFunction();
 const product = ref(null);
 const loading = ref(true);
-
+const productType = ref(null);
 fetch("/api/product/" + route.params.id)
     .then((response) => response.json())
     .then((data) => {
-        product.value = data;
-        loading.value = false;
+        product.value = data.product;
+        productType.value = data.enumExpir,
+            loading.value = false;
     })
     .catch((error) => {
         console.log(error.message);
@@ -78,6 +75,9 @@ function formatPrice(price) {
 }
 
 function addToCart(product) {
+    product.expir = getExpirType(product.product_type, productType.value);
     store.dispatch('addToCart', product);
 }
+
+
 </script>

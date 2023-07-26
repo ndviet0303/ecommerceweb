@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string("product_name");
             $table->integer("product_price");
-            $table->integer("product_type");
+            $table->integer('product_type')->comment('ProductTypeEnum');
             $table->string("product_info");
             $table->string("product_img")->nullable();
             $table->string("product_vid")->nullable();
             $table->string("product_information")->nullable();
             $table->integer("product_view")->default(0);
             $table->integer("product_bought")->default(0);
-            $table->foreignId('type_id')->constrained('type_product');
+            $table->foreignId('type_id')->constrained('product_type');
             $table->integer("is_show");
+            $table->foreignId('author_id')->constrained('users');
             $table->timestamps();
         });
     }

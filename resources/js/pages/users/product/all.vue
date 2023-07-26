@@ -11,14 +11,10 @@
                             <div class="flex items-baseline text-gray-900 ">
                                 <span class="text-5xl font-extrabold tracking-tight">{{
                                     product.product_price.toLocaleString() }}</span>
-                                <div v-if="product.product_type == 1">
-                                    <span class="ml-1 text-xl font-normal text-gray-500">/Tháng
-                                    </span>
-                                </div>
-                                <div v-else-if="product.product_type == 2">
-                                    <span class="ml-1 text-xl font-normal text-gray-500">/Vĩnh Viễn
-                                    </span>
-                                </div>
+                                <span class="ml-1 text-xl font-normal text-gray-500">/ {{ getExpirType(product.product_type,
+                                    dataProducts.enumExpir)
+                                }}
+                                </span>
                             </div>
                             <ul role="list" class="space-y-5 my-7">
                                 <li class="flex space-x-3 items-center">
@@ -54,13 +50,14 @@
 
 <script>
 import { defineComponent, reactive, ref } from "vue";
-
+import { useFunction } from "../../../lib/function";
 
 export default defineComponent({
     setup() {
         const isLoading = ref(false);
         const dataProducts = reactive({});
-        return { isLoading, dataProducts };
+        const { getExpirType } = useFunction();
+        return { isLoading, dataProducts, getExpirType };
     },
     created() {
         fetch("/api/Allproducts")
@@ -73,6 +70,6 @@ export default defineComponent({
                 console.log(error);
                 this.isLoading = true;
             });
-    }
+    },
 });
 </script>

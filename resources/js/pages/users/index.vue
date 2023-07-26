@@ -10,14 +10,9 @@
                                 <div class="flex items-baseline text-gray-900 ">
                                     <span class="text-5xl font-extrabold tracking-tight">{{
                                         product.product_price.toLocaleString() }}</span>
-                                    <div v-if="product.product_type == 1">
-                                        <span class="ml-1 text-xl font-normal text-gray-500">/Tháng
-                                        </span>
-                                    </div>
-                                    <div v-else-if="product.product_type == 2">
-                                        <span class="ml-1 text-xl font-normal text-gray-500">/Vĩnh Viễn
-                                        </span>
-                                    </div>
+                                    <span class="ml-1 text-xl font-normal text-gray-500">/{{
+                                        getExpirType(product.product_type, productType) }}
+                                    </span>
                                 </div>
                                 <ul role="list" class="space-y-5 my-7">
                                     <li class="flex space-x-3 items-center">
@@ -80,12 +75,16 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useFunction } from "../../lib/function";
 
 export default defineComponent({
     data() {
+        const { getExpirType } = useFunction();
         return {
             products: Array,
             loading: Boolean,
+            productType: Array,
+            getExpirType,
         };
     },
     created() {
@@ -93,7 +92,8 @@ export default defineComponent({
         fetch("/api/products")
             .then((response) => response.json())
             .then((data) => {
-                this.products = data;
+                this.products = data.products;
+                this.productType = data.enumExpir;
                 this.loading = false;
             })
             .catch((error) => {

@@ -34,8 +34,8 @@
                             <td class="px-6 py-4" v-if="product.product_price != null">
                                 {{ formatPrice(product.product_price) }} đ
                             </td>
-                            <td class="px-6 py-4" v-if="product.product_type == 1">
-                                {{ product.quantity }} Tháng
+                            <td class="px-6 py-4" v-if="product.product_type != 0">
+                                {{ product.quantity + ' ' + product.expir }}
                             </td>
                             <td class="px-6 py-4" v-else>
                                 Vĩnh Viễn
@@ -76,9 +76,11 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import router from '../../router';
-
+import { useFunction } from "../../lib/function";
 
 const store = useStore();
+
+const { getExpirType } = useFunction();
 // Lấy danh sách sản phẩm trong giỏ hàng từ Vuex store
 const productList = computed(() => store.getters.getCartItems);
 function addToCart(product) {
@@ -107,8 +109,23 @@ function continueBuy() {
     router.push({ name: 'Home' });
 }
 
-function paid(){
-    
+async function paid() {
+    const postData = productList.value;
+    await axios.post('/api/paid', { postData }, {
+        headers: {
+            Authorization: `Bearer ${store.state.token}`
+        }
+    }).then((response) => {
+        console.log(response);
+    }).catch((error) => {
+        if (error.response) {
+            if (error.response.status === 401) {
+                store.dispatch('clearUser');
+                store.dispatch('clearToken');
+                router.push({ name: 'login' });
+            }
+        }
+    });
 }
 
 </script>

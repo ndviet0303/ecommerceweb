@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_type', function (Blueprint $table) {
+        Schema::create('license', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('license_key');
+            $table->string('license_type');
+            $table->dateTime('expiry_date')->nullable(); 
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_type');
+        Schema::dropIfExists('license');
     }
 };

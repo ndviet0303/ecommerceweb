@@ -44,6 +44,7 @@
 
 <script>
 import { reactive, defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
 export default defineComponent({
     setup() {
         const error = reactive({
@@ -60,10 +61,11 @@ export default defineComponent({
             new_password: "",
             confirm_password: "",
         });
+        const store = useStore();
         const submitForm = async () => {
 
             try {
-                const token = localStorage.getItem('token');
+                const token = store.state.token;
                 const response = await axios.post('/api/change-password', {
 
                     curr_password: formData.curr_password,

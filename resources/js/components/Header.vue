@@ -33,10 +33,11 @@
                             <button> {{ user.name + ' ' + user.cash.toLocaleString() + 'đ ' }}<font-awesome-icon
                                     :icon="['fas', 'caret-down']" /></button>
                             <div class="dropdown-content capitalize">
+                                <router-link v-if="user.user_role >= 2"
+                                    :to="{ name: 'admin.dashboard' }"><span>Admin</span></router-link>
                                 <router-link :to="{ name: 'information' }">tT tài khoản</router-link>
                                 <router-link :to="{ name: 'changepass' }">đổi mật khẩu</router-link>
                                 <a href="#" @click="logout">đăng xuất</a>
-                                <router-link v-if="user.role >= 2" :to="{ name: 'Home' }">Admin</router-link>
                             </div>
                         </div>
                     </div>
@@ -153,7 +154,9 @@ export default {
                 }).then((response) => {
                     store.dispatch('setUser', response.data.user);
                 }).catch(() => {
-                    store.state.isAuthenticated = false;
+                    store.dispatch('clearUser');
+                    store.dispatch('clearToken');
+                    // store.state.isAuthenticated = false;
                 });
             }
         };

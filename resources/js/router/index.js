@@ -10,6 +10,7 @@ import deposit from './Func/deposit';
 import infor from './users/infor';
 import changepass from './users/changepass';
 import cart from './users/cart';
+import product from "./admin/product";
 import axios from 'axios';
 import { useStore } from 'vuex';
 
@@ -24,7 +25,8 @@ const routes = [
     ...deposit,
     ...infor,
     ...changepass,
-    ...cart
+    ...cart,
+    ...product
 ];
 
 const router = createRouter({
@@ -51,7 +53,6 @@ router.beforeEach(async (to, from, next) => {
             next({ name: 'login' });
         } else {
             const user = store.getters['getUserData'];
-            console.log(user);
             if (user.user_role >= 2) {
                 next();
             }

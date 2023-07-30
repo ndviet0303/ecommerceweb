@@ -14,9 +14,9 @@
                 </li>
 
                 <li>
-                    <router-link :to="{ name: 'admin.dashboard' }" href="#"
+                    <router-link :to="{ name: 'admin.product' }" href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
-                        :class="{ 'bg-gray-100': $route.name === 'admin.dashboard' }">
+                        :class="{ 'bg-gray-100': $route.name === 'admin.product' }">
                         <font-awesome-icon :icon="['fas', 'chart-line']" />
                         <span class="ml-3">Product</span>
                     </router-link>

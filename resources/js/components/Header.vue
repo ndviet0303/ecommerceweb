@@ -30,8 +30,8 @@
                                 Đăng Ký </router-link>
                         </div>
                         <div v-else class="dropdown pl-5 pr-5 py-4">
-                            <button> {{ user.name + ' ' + user.cash.toLocaleString() + 'đ ' }}<font-awesome-icon
-                                    :icon="['fas', 'caret-down']" /></button>
+                            <button> {{ user.name + ' ' + user.cash.toLocaleString() + 'đ '
+                            }}<font-awesome-icon :icon="['fas', 'caret-down']" /></button>
                             <div class="dropdown-content capitalize">
                                 <router-link v-if="user.user_role >= 2"
                                     :to="{ name: 'admin.dashboard' }"><span>Admin</span></router-link>
@@ -162,6 +162,7 @@ export default {
         };
 
         onMounted(fetchUserData);
+        
         return {
             user,
             isAuthorized,

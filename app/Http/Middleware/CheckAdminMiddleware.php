@@ -16,7 +16,7 @@ class CheckAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role_id >= 2) {
+        if (Auth::user()->user_role >= 2) {
             return $next($request);
         }else{
             return redirect('404');

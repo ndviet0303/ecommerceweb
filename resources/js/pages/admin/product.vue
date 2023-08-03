@@ -22,68 +22,27 @@
                     </button>
                     <div class="px-6 py-6 lg:px-8">
                         <h3 class="mb-4 text-xl font-medium text-gray-900 ">Thêm Tool</h3>
-                        <form class="space-y-6" action="#">
+                        <div class="space-y-6">
                             <div>
-                                <label for="product_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên Sản
-                                    Phẩm</label>
-                                <input type="text" name="product_name" id="product_name"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    required placeholder="Tool X">
-                                <label for="product_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá Sản
-                                    Phẩm</label>
-                                <input type="number" name="product_price" id="product_price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    required placeholder="5000">
-                                <label for="product_type" class="block mb-2 text-sm font-medium text-gray-900 ">Hạn Sử Dụng
-                                    Sản
-                                    Phẩm</label>
-
-                                <select type="number" name="product_type" id="product_type"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    required>
-                                    <option v-for="(expir, index) in enumExpir" :value="expir" :key="index">
-                                        {{ Object.keys(enumExpir).find(key => enumExpir[key] === expir) }}
-                                    </option>
-
-                                </select>
-
-                                <label for="product_price" class="block mb-2 text-sm font-medium text-gray-900 ">Thông Tin
-                                    cơ Bản</label>
-                                <input type="text" name="product_info" id="product_info"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    required placeholder="tool ghẻ , tool sida">
-
-                                <label for="product_price" class="block mb-2 text-sm font-medium text-gray-900 ">hình
-                                    ảnh</label>
-                                <input type="text" name="product_img" id="product_img"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    placeholder="link , link">
-                                <label for="product_price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">video</label>
-                                <input type="text" name="product_vid" id="product_vid"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    placeholder="link , link">
-
-                                <label for="product_infor" class="block mb-2 text-sm font-medium text-gray-900 ">TT đầy
-                                    đủ</label>
-                                <textarea type="text" name="product_infor" id="product_infor"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    placeholder="á á ki mô chi" />
-                                <label for="product_type_app" class="block mb-2 text-sm font-medium text-gray-900 ">Loại
-                                    Tool</label>
-                                <select type="number" name="product_type_app" id="product_type_app"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                    required>
-                                    <option v-for="(product, index) in product_type" :value="product.id" :key="index">
-                                        {{ product.name }}
-                                    </option>
-
-                                </select>
-
+                                <InputField v-model="formData.name" label="Tên Sản Phẩm" type="text" name="product_name"
+                                    placeholder="Tool X" required />
+                                <InputField v-model="formData.price" label="Giá Sản
+                                    Phẩm" name="product_name" type="number" required />
+                                <SelectEnumField v-model="formData.type" label="Loại Time" name="select_option"
+                                    :options="enumExpir" required />
+                                <InputField v-model="formData.infor" label="Thông Tin
+                                    cơ Bản" name="product_price" type="text" placeholder="tool ghẻ , tool sida"
+                                    required />
+                                <InputField v-model="formData.img" label="hình
+                                    ảnh" name="product_img" type="text" placeholder="link , link" required />
+                                <InputField v-model="formData.vid" label="video" name="product_vid" type="text"
+                                    placeholder="link , link" required />
+                                <TextAreaField v-model="formData.description" label="Mô tả" name="description" required />
+                                <SelectField v-model="formData.typeclassify" label="Loại
+                                Tool" name="product_type_app" :options="product_type" required />
                             </div>
-                            <button type="submit"
-                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Gửi</button>
-                        </form>
+                            <ButtonPrimary label="Gửi" :onClick="SendData" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,21 +96,64 @@
                         <th scope="col" class="px-6 py-3">
                             Update At
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Function
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b ">
+                    <tr v-for="product in products" :key="product.id" class="bg-white border-b ">
+
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            1
+                            {{ product.id }}
                         </th>
                         <td class="px-6 py-4">
-                            Silver
+                            {{ product.product_name }}
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{ product.product_price.toLocaleString() }}đ
+                        </td>
+                        <td class="px-6 py-4"> {{ Object.keys(enumExpir).find(key =>
+                            enumExpir[key] === product.product_type) }}
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{ product.product_info }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ product.product_img }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ product.product_vid }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ truncateText(product.product_description, 50) }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ product.product_view }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ product.product_bought }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ product_type[product.type_id - 1].name }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ product.is_show ? 'Đã Duyệt' : 'Chưa Duyệt' }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ formatDateTime(product.created_at) }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ formatDateTime(product.updated_at) }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <button>Sửa</button>
+                            <button>Xoá</button>
                         </td>
                     </tr>
                 </tbody>
@@ -165,15 +167,50 @@
 import axios from 'axios';
 import { onMounted, ref, reactive } from 'vue';
 import { useStore } from 'vuex';
+import InputField from '../../components/Field/InputField.vue';
+import SelectEnumField from '../../components/Field/SelectEnumField.vue';
+import SelectField from '../../components/Field/SelectField.vue'
+import TextAreaField from '../../components/Field/TextAreaField.vue';
+import ButtonPrimary from '../../components/button/ButtonPrimary.vue';
 
 const isModalVisible = ref(false);
 const products = ref({});
 const enumExpir = ref({});
 const product_type = ref({});
-
+const formData = reactive({
+    name: "",
+    price: 0,
+    type: 0,
+    infor: "",
+    img: "",
+    vid: "",
+    description: "",
+    typeclassify: 0,
+});
+const store = useStore();
 function toggleModal() {
     isModalVisible.value = !isModalVisible.value;
 }
+const formatDateTime = (dateTimeStr) => {
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    };
+
+    const formattedDateTime = new Date(dateTimeStr).toLocaleString(undefined, options);
+    return formattedDateTime;
+};
+const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.slice(0, maxLength) + '...';
+    } else {
+        return text;
+    }
+};
 
 async function getProduct() {
     const store = useStore();
@@ -187,6 +224,18 @@ async function getProduct() {
         product_type.value = response.data.product_type;
     }).catch((error) => {
         console.log(error);
+    });
+}
+
+async function SendData() {
+    await axios.post('/api/admin/product/add', { formData }, {
+        headers: {
+            Authorization: `Bearer ${store.state.token}`
+        }
+    }).then((response) => {
+        isModalVisible.value = false;
+    }).catch((error) => {
+        isModalVisible.value = false;
     });
 }
 

@@ -56,7 +56,24 @@ class AdminController extends Controller
             return response()->json(['error' => 'Error saving product'], 500);
         }
     }
-
+    public function productRemove(Request $request)
+    {
+        $data = (object)$request->data;
+        $product = Product::find($data->id);
+        if ($product) {
+            if ($product->author_id == auth()->user()->id) {
+                $product->delete();
+                return response()->json(['message' => 'Product deleted successfully']);
+            } else {
+                return response()->json(['message' => 'Unauthorized. Cannot delete product']);
+            }
+        } else {
+            return response()->json(['message' => 'Product not found']);
+        }
+    }
+    public function productChange(Request $request)
+    {
+    }
     public static function convertLinkToJson($string)
     {
         $linkArray = explode(',', $string);

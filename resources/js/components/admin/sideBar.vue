@@ -3,7 +3,7 @@
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 ">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <router-link :to="{ name: 'admin.dashboard' }" href="#"
+                    <router-link :to="{ name: 'admin.dashboard' }"
                         class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                         :class="{ 'bg-gray-100': $route.name === 'admin.dashboard' }">
                         <font-awesome-icon :icon="['fas', 'chart-line']" />
@@ -14,7 +14,7 @@
                 </li>
 
                 <li>
-                    <router-link :to="{ name: 'admin.product' }" href="#"
+                    <router-link :to="{ name: 'admin.product' }"
                         class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                         :class="{ 'bg-gray-100': $route.name === 'admin.product' }">
                         <font-awesome-icon :icon="['fas', 'chart-line']" />

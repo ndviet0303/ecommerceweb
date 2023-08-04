@@ -17,7 +17,7 @@
                     <router-link :to="{ name: 'admin.product' }"
                         class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                         :class="{ 'bg-gray-100': $route.name === 'admin.product' }">
-                        <font-awesome-icon :icon="['fas', 'chart-line']" />
+                        <font-awesome-icon :icon="['fas', 'gear']" />
                         <span class="ml-3">Product</span>
                     </router-link>
 

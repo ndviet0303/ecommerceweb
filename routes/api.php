@@ -41,4 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('products', [AdminController::class, 'products']);
         Route::post('product/add', [AdminController::class, 'productAdd']);
     });
+
+    Route::middleware('superadmin')->prefix('admin')->group(function () {
+        
+    });
 });

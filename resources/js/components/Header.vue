@@ -4,9 +4,9 @@
             <div class="container m-auto">
                 <div class="flex flex-row justify-around">
                     <div class="flex flex-row">
-                        <a href="mailto:ndviet.dev@gmail.com" class="py-4 pr-5 line-space-right">
+                        <a href="mailto:contact@ziet.dev" class="py-4 pr-5 line-space-right">
                             <font-awesome-icon :icon="['fas', 'envelope']" />
-                            ndviet.dev@gmail.com
+                            contact@ziet.dev
                         </a>
                         <a href="tel:+84345694088" class="py-4 pl-5">
                             <font-awesome-icon :icon="['fas', 'phone']" />

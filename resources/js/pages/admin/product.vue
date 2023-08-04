@@ -126,7 +126,7 @@
                             {{ product.product_vid }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ truncateText(product.product_description, 50) }}
+                            {{ truncateText(product.product_description, 10) }}
                         </td>
                         <td class="px-6 py-4">
                             {{ product.product_view }}
@@ -140,7 +140,10 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            {{ product.is_show ? 'Đã Duyệt' : 'Chưa Duyệt' }}
+                            <p
+                                :class="product.is_show ? 'text-green-500 bg-green-300 rounded-xl p-2' : 'text-red-500 bg-red-300 rounded-xl p-2'">
+                                {{ product.is_show ? 'Đã Duyệt' :
+                                    'Chưa Duyệt' }}</p>
                         </td>
 
                         <td class="px-6 py-4">
@@ -152,8 +155,8 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <button>Sửa</button>
-                            <button>Xoá</button>
+                            <ButtonGreen :onClick="Change(product)" label="Sửa" />
+                            <ButtonRed :onClick="Delete(product)" label="Xoá" />
                         </td>
                     </tr>
                 </tbody>
@@ -172,6 +175,8 @@ import SelectEnumField from '../../components/Field/SelectEnumField.vue';
 import SelectField from '../../components/Field/SelectField.vue'
 import TextAreaField from '../../components/Field/TextAreaField.vue';
 import ButtonPrimary from '../../components/button/ButtonPrimary.vue';
+import ButtonRed from '../../components/button/ButtonRed.vue';
+import ButtonGreen from '../../components/button/ButtonGreen.vue';
 
 const isModalVisible = ref(false);
 const products = ref({});

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Enums\ProductTypeEnum;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -73,6 +74,22 @@ class AdminController extends Controller
     }
     public function productChange(Request $request)
     {
+        try {
+            $data = (object)$request->product;
+            $product = Product::find($data->id);
+            $product->product_name = $data->product_name;
+            $product->product_price = $data->product_price;
+            $product->product_type = $data->product_type;
+            $product->product_info = self::convertLinkToJson($data->product_info);
+            $product->product_img = self::convertLinkToJson($data->product_img);
+            $product->product_vid = self::convertLinkToJson($data->product_vid);
+            $product->product_description = $data->product_description;
+            $product->type_id = $data->type_id;
+            $product->save();
+            return response()->json(['message' => 'Product save successfully']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
     }
     public static function convertLinkToJson($string)
     {

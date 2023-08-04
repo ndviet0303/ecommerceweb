@@ -68,10 +68,10 @@
                         <h3 class="mb-4 text-xl font-medium text-gray-900 ">Sửa Tool</h3>
                         <div class="space-y-6">
                             <div>
-                                <InputField v-model="productChange.product_name" label="Tên Sản Phẩm" type="text" name="product_name"
-                                    placeholder="Tool X" required/>
-                                <InputField v-model="productChange.product_price" label="Giá Sản Phẩm" name="product_name" type="number"
-                                    required />
+                                <InputField v-model="productChange.product_name" label="Tên Sản Phẩm" type="text"
+                                    name="product_name" placeholder="Tool X" required />
+                                <InputField v-model="productChange.product_price" label="Giá Sản Phẩm" name="product_name"
+                                    type="number" required />
                                 <SelectEnumField v-model="productChange.product_type" label="Loại Time" name="select_option"
                                     :options="enumExpir" required />
                                 <InputField v-model="productChange.product_info" label="Thông Tin
@@ -81,11 +81,12 @@
                                     ảnh" name="product_img" type="text" placeholder="link , link" required />
                                 <InputField v-model="productChange.product_vid" label="video" name="product_vid" type="text"
                                     placeholder="link , link" required />
-                                <TextAreaField v-model="productChange.product_description" label="Mô tả" name="description" required />
+                                <TextAreaField v-model="productChange.product_description" label="Mô tả" name="description"
+                                    required />
                                 <SelectField v-model="productChange.type_id" label="Loại
                                 Tool" name="product_type_app" :options="product_type" required />
                             </div>
-                            <ButtonPrimary label="Sửa" :onClick="SendData" />
+                            <ButtonPrimary label="Sửa" :onClick="SendChange" />
                         </div>
                     </div>
                 </div>
@@ -192,13 +193,13 @@
                             enumExpir[key] === product.product_type) }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ product.product_info }}
+                            {{ parseJsonString(product.product_info) }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ product.product_img }}
+                            {{ parseJsonString(product.product_img) }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ product.product_vid }}
+                            {{ parseJsonString(product.product_vid) }}
                         </td>
                         <td class="px-6 py-4">
                             {{ truncateText(product.product_description, 10) }}
@@ -278,7 +279,17 @@ function showModalYN(product) {
     selectedItem.value = product;
     isModalYNShow.value = true;
 }
-
+function parseJsonString(jsonString) {
+    try {
+        const jsonArray = JSON.parse(jsonString);
+        if (Array.isArray(jsonArray) && jsonArray.length > 0) {
+            return jsonArray.join(',');
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+    return ''; // Return empty string on error or empty array
+}
 const formatDateTime = (dateTimeStr) => {
     const options = {
         year: 'numeric',
@@ -321,15 +332,28 @@ function toggleModal() {
 }
 
 function Change(product) {
-    productChange.value = product;
+    productChange.value = {
+        ...product,
+        product_img: parseJsonString(product.product_img),
+        product_info: parseJsonString(product.product_info),
+        product_vid: parseJsonString(product.product_vid)
+    };
     isModalChangeShow.value = true;
-    console.log(productChange);
 }
 
 
-function SendChange(product) {
-    console.log(product);
-    isModalChangeShow.value = true;
+async function SendChange() {
+    const product = productChange.value;
+    await axios.post('/api/admin/product/change', { product }, {
+        headers: {
+            Authorization: `Bearer ${store.state.token}`
+        }
+    }).then((response) => {
+        isModalChangeShow.value = false;
+    }).catch((error) => {
+        // isModalVisible.value = false;
+    });
+    await getProduct();
 }
 async function getProduct() {
     await axios.get('/api/admin/products', {

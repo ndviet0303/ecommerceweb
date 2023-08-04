@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('products', [AdminController::class, 'products']);
         Route::post('product/add', [AdminController::class, 'productAdd']);
         Route::post('product/remove', [AdminController::class, 'productRemove']);
-        Route::post('product/change/id', [AdminController::class, 'productChange']);
+        Route::post('product/change', [AdminController::class, 'productChange']);
     });
 
     Route::middleware('superadmin')->prefix('admin')->group(function () {

@@ -46,9 +46,51 @@
                 </div>
             </div>
         </div>
-
         <div v-if="isModalVisible" class="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-50 z-40"
             @click="toggleModal"></div>
+
+        <div v-if="isModalChangeShow"
+            class="fixed z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex justify-center items-center">
+            <div class="relative w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow ">
+                    <button type="button" @click="isModalChangeShow = false"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center "
+                        data-modal-hide="authentication-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 ">Sửa Tool</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <InputField v-model="productChange.product_name" label="Tên Sản Phẩm" type="text" name="product_name"
+                                    placeholder="Tool X" required/>
+                                <InputField v-model="productChange.product_price" label="Giá Sản Phẩm" name="product_name" type="number"
+                                    required />
+                                <SelectEnumField v-model="productChange.product_type" label="Loại Time" name="select_option"
+                                    :options="enumExpir" required />
+                                <InputField v-model="productChange.product_info" label="Thông Tin
+                                    cơ Bản" name="product_price" type="text" placeholder="tool ghẻ , tool sida"
+                                    required />
+                                <InputField v-model="productChange.product_img" label="hình
+                                    ảnh" name="product_img" type="text" placeholder="link , link" required />
+                                <InputField v-model="productChange.product_vid" label="video" name="product_vid" type="text"
+                                    placeholder="link , link" required />
+                                <TextAreaField v-model="productChange.product_description" label="Mô tả" name="description" required />
+                                <SelectField v-model="productChange.type_id" label="Loại
+                                Tool" name="product_type_app" :options="product_type" required />
+                            </div>
+                            <ButtonPrimary label="Sửa" :onClick="SendData" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div v-if="isModalYNShow" @click="cancelDeletePrd"
             class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex">
             <div class="relative w-full max-w-md max-h-full">
@@ -83,7 +125,7 @@
             </div>
         </div>
 
-        
+
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -214,6 +256,8 @@ import ButtonColor from '../../components/button/ButtonColor.vue';
 
 const isModalVisible = ref(false);
 const isModalYNShow = ref(false);
+const isModalChangeShow = ref(false);
+const productChange = ref(null);
 const selectedItem = ref(null);
 const products = reactive({});
 const enumExpir = ref({});
@@ -262,7 +306,7 @@ async function deletePrd() {
             Authorization: `Bearer ${store.state.token}`
         }
     }).then((response) => {
-       
+
     }).catch((error) => {
         window.location.reload();
     });
@@ -277,10 +321,16 @@ function toggleModal() {
 }
 
 function Change(product) {
-    console.log(product);
+    productChange.value = product;
+    isModalChangeShow.value = true;
+    console.log(productChange);
 }
 
 
+function SendChange(product) {
+    console.log(product);
+    isModalChangeShow.value = true;
+}
 async function getProduct() {
     await axios.get('/api/admin/products', {
         headers: {

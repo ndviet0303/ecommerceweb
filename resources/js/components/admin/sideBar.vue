@@ -24,7 +24,16 @@
 
                 </li>
 
+                <li>
+                    <router-link :to="{ name: 'admin.users' }"
+                        class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                        :class="{ 'bg-gray-100': $route.name === 'admin.users' }">
+                        <font-awesome-icon :icon="['fas', 'users']" />
+                        <span class="ml-3">users</span>
+                    </router-link>
 
+
+                </li>
                 <!-- <li>
                     <button @click="toggleMenuProduct" type="button"
                         class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 "

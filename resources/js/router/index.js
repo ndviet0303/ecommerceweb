@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import admin from './admin/dashboard.js';
-import user from './users/index.js';
 import products from "./users/product/all";
 import product_details from "./users/product/detail";
 import notFound from "./Func/404";
@@ -11,12 +10,13 @@ import infor from './users/infor';
 import changepass from './users/changepass';
 import cart from './users/cart';
 import product from "./admin/product";
+import users from './admin/users';
+import Home from './users/index.js'
 import axios from 'axios';
 import { useStore } from 'vuex';
 
 const routes = [
     ...admin,
-    ...user,
     ...product_details,
     ...notFound,
     ...products,
@@ -26,7 +26,9 @@ const routes = [
     ...infor,
     ...changepass,
     ...cart,
-    ...product
+    ...product,
+    ...users,
+    ...Home
 ];
 
 const router = createRouter({

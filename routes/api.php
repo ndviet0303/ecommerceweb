@@ -45,6 +45,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('superadmin')->prefix('admin')->group(function () {
-
+        Route::post('product/show', [AdminController::class, 'productShow']);
     });
 });

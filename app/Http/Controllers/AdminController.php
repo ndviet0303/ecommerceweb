@@ -91,6 +91,22 @@ class AdminController extends Controller
             return response()->json(['message' => $e]);
         }
     }
+
+    public function productShow(Request $request)
+    {
+        try {
+            $data = (object)$request->product;
+            $product = Product::find($data->id);
+            if($product)
+            {
+                $product->is_show = !$product->is_show;
+                $product->save();
+            }
+            return response()->json(['message' => 'Product save successfully']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
     public static function convertLinkToJson($string)
     {
         $linkArray = explode(',', $string);

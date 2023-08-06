@@ -235,6 +235,9 @@
                                 @click="Change(product)" label="Sửa" />
                             <ButtonColor :class="`bg-red-400 hover:bg-red-600 focus:ring-4 focus:ring-red-300`"
                                 @click="showModalYN(product)" label="Xoá" />
+                            <ButtonColor v-if="user.user_role == 3"
+                                :class="`bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300`"
+                                @click="SendShow(product)" label="Duyệt" />
                         </td>
                     </tr>
                 </tbody>
@@ -274,6 +277,7 @@ const formData = reactive({
     typeclassify: 0,
 });
 const store = useStore();
+const user = store.getters['getUserData'];
 
 function showModalYN(product) {
     selectedItem.value = product;
@@ -352,6 +356,18 @@ async function SendChange() {
         isModalChangeShow.value = false;
     }).catch((error) => {
         // isModalVisible.value = false;
+    });
+    await getProduct();
+}
+
+async function SendShow(product) {
+    await axios.post('/api/admin/product/show', { product }, {
+        headers: {
+            Authorization: `Bearer ${store.state.token}`
+        }
+    }).then((response) => {
+    }).catch((error) => {
+        isModalVisible.value = false;
     });
     await getProduct();
 }

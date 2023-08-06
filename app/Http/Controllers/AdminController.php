@@ -12,13 +12,20 @@ class AdminController extends Controller
 {
     public function products()
     {
-        $products = Product::where('author_id', auth()->user()->id)->get();
+        if(auth()->user()->user_role == 3)
+        {
+            $products = Product::get();
+        }
+        else
+        {
+            $products = Product::where('author_id', auth()->user()->id)->get();
+        }
         $typelist = DB::table('product_type')->get();
         return [
             'products' => $products,
             'enumExpir' => ProductTypeEnum::getArrayView(),
             'product_type' => $typelist,
-            
+
         ];
     }
 

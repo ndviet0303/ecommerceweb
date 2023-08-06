@@ -18,6 +18,7 @@ class AdminController extends Controller
             'products' => $products,
             'enumExpir' => ProductTypeEnum::getArrayView(),
             'product_type' => $typelist,
+            
         ];
     }
 

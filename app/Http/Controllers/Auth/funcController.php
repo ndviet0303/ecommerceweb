@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\ProductTypeEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\license;
 use App\Models\Product;
 use BenSampo\Enum\Rules\Enum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use League\CommonMark\Extension\Table\Table;
 use Psy\Readline\Hoa\Console;
 
 class funcController extends Controller
@@ -46,12 +49,26 @@ class funcController extends Controller
                     case (ProductTypeEnum::YEAR):
                         $timeExpir = Carbon::now()->addYear($objPrd->quantity);
                         break;
-                        $productNew = new Product();
+                }
+
+                if ($timeExpir == null) {
+                    for ($i = 0; $i < $objPrd->quantity; $i++) {
+                        $productNew = new license();
                         $productNew->user_id = auth()->user()->id;
                         $productNew->license_key = '';
                         $productNew->license_type = $product->license_type;
-                        $productNew->expir_date = $timeExpir;
+                        $productNew->expiry_date = $timeExpir;
                         $productNew->save();
+                    }
+                    return response()->json(['message' => 'Success']);
+                } else {
+                    $productNew = new license();
+                    $productNew->user_id = auth()->user()->id;
+                    $productNew->license_key = '';
+                    $productNew->license_type = $product->license_type;
+                    $productNew->expiry_date = $timeExpir;
+                    $productNew->save();
+                    return response()->json(['message' => 'Success']);
                 }
             }
         }

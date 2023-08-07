@@ -116,7 +116,9 @@ async function paid() {
             Authorization: `Bearer ${store.state.token}`
         }
     }).then((response) => {
-        console.log(response);
+        if (response.data.message == "Success") {
+            store.dispatch('clearCart');
+        }
     }).catch((error) => {
         if (error.response) {
             if (error.response.status === 401) {

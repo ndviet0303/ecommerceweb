@@ -12,6 +12,7 @@ import cart from './users/cart';
 import product from "./admin/product";
 import users from './admin/users';
 import Home from './users/index.js'
+import license from './users/license';
 import axios from 'axios';
 import { useStore } from 'vuex';
 
@@ -28,7 +29,8 @@ const routes = [
     ...cart,
     ...product,
     ...users,
-    ...Home
+    ...Home,
+    ...license
 ];
 
 const router = createRouter({

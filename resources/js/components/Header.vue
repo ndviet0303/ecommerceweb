@@ -36,6 +36,7 @@
                                 <router-link v-if="user.user_role >= 2"
                                     :to="{ name: 'admin.dashboard' }"><span>Admin</span></router-link>
                                 <router-link :to="{ name: 'information' }">tT tài khoản</router-link>
+                                <router-link :to="{ name: 'license' }">license</router-link>
                                 <router-link :to="{ name: 'changepass' }">đổi mật khẩu</router-link>
                                 <a href="#" @click="logout">đăng xuất</a>
                             </div>

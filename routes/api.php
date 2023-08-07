@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\funcController;
 use App\Http\Controllers\Auth\loginController;
 use App\Http\Controllers\Auth\registerController;
+use App\Http\Controllers\licenseController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/user', [AuthController::class, 'user']);
     Route::post('/paid', [funcController::class, 'paid']);
+    Route::get('/license',[licenseController::class,'licenseShow']);
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('products', [AdminController::class, 'products']);

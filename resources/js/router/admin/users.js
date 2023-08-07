@@ -7,7 +7,7 @@ const users = [
                 path: "users",
                 name: "admin.users",
                 component: () => import(/* webpackChunkName: "admin" */"../../pages/admin/users.vue"),
-                meta: { requiresRole: true }
+                meta: { requiresSPRole: true }
             }
         ]
     }

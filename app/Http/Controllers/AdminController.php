@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Enums\ProductTypeEnum;
-use Exception;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     public function products()
     {
-        if(auth()->user()->user_role == 3)
-        {
+        if (auth()->user()->user_role == 3) {
             $products = Product::get();
-        }
-        else
-        {
+        } else {
             $products = Product::where('author_id', auth()->user()->id)->get();
         }
         $typelist = DB::table('product_type')->get();
@@ -105,12 +104,86 @@ class AdminController extends Controller
         try {
             $data = (object)$request->product;
             $product = Product::find($data->id);
-            if($product)
-            {
+            if ($product) {
                 $product->is_show = !$product->is_show;
                 $product->save();
             }
             return response()->json(['message' => 'Product save successfully']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
+
+    public function Users()
+    {
+        try {
+            $users = User::get();
+            $role = DB::table('role')->get();
+            return response()->json([
+                'users' => $users,
+                'role' => $role
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
+
+    public function UserChange(Request $request)
+    {
+        try {
+
+            $userData = (object)$request->userData;
+
+            $user = User::find($userData->id);
+
+            if ($user) {
+                $user->name = $userData->name;
+                $user->email = $userData->email;
+                $user->cash = $userData->cash;
+                $user->user_role = $userData->user_role;
+                $user->blocked = $userData->blocked;
+                $user->save();
+                return response()->json(['message' => 'User save successfully']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
+
+    public function UserDel(Request $request)
+    {
+        try {
+
+            $userData = (object)$request->userData;
+
+            $user = User::find($userData->id);
+
+            if ($user) {
+                $user->delete();
+                $user->save();
+                return response()->json(['message' => 'User Delete successfully']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
+
+    public function UserVerify(Request $request)
+    {
+        try {
+            $userData = (object)$request->user;
+
+            $user = User::find($userData->id);
+
+            if ($user) {
+                if ($user->email_verified_at == null) {
+                    $user->email_verified_at = Carbon::now();;
+                } else {
+                    $user->email_verified_at = null;
+                }
+                $user->save();
+                return response()->json(['message' => 'User Delete successfully']);
+            }
         } catch (Exception $e) {
             return response()->json(['message' => $e]);
         }

@@ -48,10 +48,10 @@
             <div class="container py-10 flex flex-row flex-wrap justify-between m-auto">
                 <div class="flex-1 text-center justify-center">
                     <div class="flex h-full items-center justify-center">
-                        <a href="/">
+                        <router-link :to="{ name: 'Home' }">
                             <p class="text-5xl">Logo</p>
                             <!-- <img src="img/logo.png" alt=""> -->
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div class="flex-auto">
@@ -162,7 +162,7 @@ export default {
         };
 
         onMounted(fetchUserData);
-        
+
         return {
             user,
             isAuthorized,

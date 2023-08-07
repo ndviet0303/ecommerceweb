@@ -63,6 +63,20 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     }
+    else if (to.meta.requiresSPRole) {
+        const authenticated = await checkLogin();
+        if (!authenticated) {
+            next({ name: 'login' });
+        } else {
+            const user = store.getters['getUserData'];
+            if (user.user_role >= 3) {
+                next();
+            }
+            else {
+                next({ name: 'NotFound' })
+            }
+        }
+    }
     else {
         next();
 

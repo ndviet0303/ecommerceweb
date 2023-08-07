@@ -46,5 +46,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('superadmin')->prefix('admin')->group(function () {
         Route::post('product/show', [AdminController::class, 'productShow']);
+
+        Route::get('users', [AdminController::class, 'Users']);
+        Route::post('user/change', [AdminController::class, 'UserChange']);
+        Route::post('user/del', [AdminController::class, 'UserDel']);
+        Route::post('user/verify', [AdminController::class, 'UserVerify']);
     });
 });

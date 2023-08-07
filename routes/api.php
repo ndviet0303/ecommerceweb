@@ -39,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user', [AuthController::class, 'user']);
     Route::post('/paid', [funcController::class, 'paid']);
     Route::get('/license',[licenseController::class,'licenseShow']);
+    Route::post('/license/change',[licenseController::class,'licenseChange']);
+    Route::post('/license/extend',[licenseController::class,'licenseExtend']);
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('products', [AdminController::class, 'products']);

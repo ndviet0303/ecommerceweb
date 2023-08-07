@@ -27,6 +27,9 @@
                                     placeholder="Tool X" required />
                                 <InputField v-model="formData.price" label="Giá Sản Phẩm" name="product_name" type="number"
                                     required />
+                                <InputField v-model="formData.license_type" label="Type" name="product_license" type="text"
+                                    required />
+                                <InputField v-model="formData.url" label="Url" name="product_url" type="text" required />
                                 <SelectEnumField v-model="formData.type" label="Loại Time" name="select_option"
                                     :options="enumExpir" required />
                                 <InputField v-model="formData.infor" label="Thông Tin
@@ -147,6 +150,9 @@
                             TT Chung
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            License Type
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Ảnh
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -168,10 +174,7 @@
                             Duyệt
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Created At
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Update At
+                            Url
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Function
@@ -194,6 +197,9 @@
                         </td>
                         <td class="px-6 py-4">
                             {{ parseJsonString(product.product_info) }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ product.license_type }}
                         </td>
                         <td class="px-6 py-4">
                             {{ parseJsonString(product.product_img) }}
@@ -221,15 +227,9 @@
                                 {{ product.is_show ? 'Đã Duyệt' :
                                     'Chưa Duyệt' }}</p>
                         </td>
-
                         <td class="px-6 py-4">
-                            {{ formatDateTime(product.created_at) }}
+                            {{ (product.download_url) }}
                         </td>
-
-                        <td class="px-6 py-4">
-                            {{ formatDateTime(product.updated_at) }}
-                        </td>
-
                         <td class="px-6 py-4">
                             <ButtonColor :class="`bg-green-400 hover:bg-green-600 focus:ring-4 focus:ring-green-300`"
                                 @click="Change(product)" label="Sửa" />
@@ -270,6 +270,8 @@ const formData = reactive({
     name: "",
     price: 0,
     type: 0,
+    license_type: "",
+    url: "",
     infor: "",
     img: "",
     vid: "",

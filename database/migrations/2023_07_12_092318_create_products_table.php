@@ -17,12 +17,14 @@ return new class extends Migration
             $table->integer("product_price");
             $table->integer('product_type')->comment('ProductTypeEnum');
             $table->string("product_info");
+            $table->string("license_type")->unique();
             $table->string("product_img")->nullable();
             $table->string("product_vid")->nullable();
             $table->string("product_description")->nullable();
             $table->integer("product_view")->default(0);
             $table->integer("product_bought")->default(0);
             $table->foreignId('type_id')->constrained('product_type');
+            $table->string('download_url');
             $table->integer("is_show")->default(0);
             $table->foreignId('author_id')->constrained('users');
             $table->timestamps();

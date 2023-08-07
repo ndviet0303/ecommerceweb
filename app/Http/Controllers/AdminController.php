@@ -38,6 +38,8 @@ class AdminController extends Controller
                 'formData.infor' => 'required|string',
                 'formData.img' => 'required|string',
                 'formData.vid' => 'required|string',
+                'formData.license_type' => 'required|string',
+                'formData.url' => 'required|string',
                 'formData.description' => 'required|string',
                 'formData.typeclassify' => 'required',
             ];
@@ -55,6 +57,8 @@ class AdminController extends Controller
             $product->product_info = self::convertLinkToJson($formData->infor);
             $product->product_img = self::convertLinkToJson($formData->img);
             $product->product_vid = self::convertLinkToJson($formData->vid);
+            $product->license_type = $formData->license_type;
+            $product->download_url = $formData->url;
             $product->product_description = $formData->description;
             $product->type_id = $formData->typeclassify;
             $product->author_id = auth()->user()->id;

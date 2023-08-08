@@ -47,6 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('product/add', [AdminController::class, 'productAdd']);
         Route::post('product/remove', [AdminController::class, 'productRemove']);
         Route::post('product/change', [AdminController::class, 'productChange']);
+
+        Route::get('license', [AdminController::class, 'license']);
+        Route::post('license/change', [AdminController::class, 'licenseChange']);
+        Route::post('license/del', [AdminController::class, 'licenseDel']);
+        Route::post('license/add', [AdminController::class, 'licenseAdd']);
     });
 
     Route::middleware('superadmin')->prefix('admin')->group(function () {

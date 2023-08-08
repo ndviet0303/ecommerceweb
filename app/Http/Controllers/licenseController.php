@@ -64,30 +64,30 @@ class licenseController extends Controller
                                 break;
                             case (ProductTypeEnum::DAY):
                                 if (Carbon::parse($license->expiry_date) >= Carbon::now()) {
-                                    $timeExpir = Carbon::parse($license->expiry_date)->addHour($quan);
+                                    $timeExpir = Carbon::parse($license->expiry_date)->addDay($quan);
                                 } else {
-                                    $timeExpir = Carbon::now()->addHour($quan);
+                                    $timeExpir = Carbon::now()->addDay($quan);
                                 }
                                 break;
                             case (ProductTypeEnum::WEEK):
                                 if (Carbon::parse($license->expiry_date) >= Carbon::now()) {
-                                    $timeExpir = Carbon::parse($license->expiry_date)->addHour($quan);
+                                    $timeExpir = Carbon::parse($license->expiry_date)->addWeek($quan);
                                 } else {
-                                    $timeExpir = Carbon::now()->addHour($quan);
+                                    $timeExpir = Carbon::now()->addWeek($quan);
                                 }
                                 break;
                             case (ProductTypeEnum::MONTH):
                                 if (Carbon::parse($license->expiry_date) >= Carbon::now()) {
-                                    $timeExpir = Carbon::parse($license->expiry_date)->addHour($quan);
+                                    $timeExpir = Carbon::parse($license->expiry_date)->addMonth($quan);
                                 } else {
-                                    $timeExpir = Carbon::now()->addHour($quan);
+                                    $timeExpir = Carbon::now()->addMonth($quan);
                                 }
                                 break;
                             case (ProductTypeEnum::YEAR):
                                 if (Carbon::parse($license->expiry_date) >= Carbon::now()) {
-                                    $timeExpir = Carbon::parse($license->expiry_date)->addHour($quan);
+                                    $timeExpir = Carbon::parse($license->expiry_date)->addYear($quan);
                                 } else {
-                                    $timeExpir = Carbon::now()->addHour($quan);
+                                    $timeExpir = Carbon::now()->addYear($quan);
                                 }
                                 break;
                         }

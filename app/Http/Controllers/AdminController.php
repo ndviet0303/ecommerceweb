@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Enums\ProductTypeEnum;
+use App\Models\license;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -192,6 +193,149 @@ class AdminController extends Controller
             return response()->json(['message' => $e]);
         }
     }
+
+    public function license()
+    {
+        if (Auth()->user()->user_role == 3) {
+            $license = license::get();
+        } else {
+            $authorId = Auth()->user()->id;
+            $licenseTypes = Product::where('author_id', $authorId)->pluck('license_type')->toArray();
+
+            $license = License::whereIn('license_type', $licenseTypes)->get();
+        }
+
+        return [
+            'licenses' => $license,
+            'enumExpir' => ProductTypeEnum::getArrayView(),
+        ];
+    }
+
+    public function licenseChange(Request $request)
+    {
+        try {
+            $licenseData = (object)$request->licenseData;
+            $dayAdd = (object)$licenseData->dayAdd;
+            $license = (object)$licenseData->license;
+            if (Auth()->user()->user_role == 3) {
+                $licenseGet = license::find($license->id);
+            } else {
+                $authorId = Auth()->user()->id;
+                $licenseTypes = Product::where('author_id', $authorId)
+                    ->pluck('license_type')
+                    ->toArray();
+                $licenseGet = license::whereIn('license_type', $licenseTypes)
+                    ->where('id', $license->id)
+                    ->first();
+            }
+            $licenseGet->user_id = $license->user_id;
+            if ($license->license_key !== null) {
+                $licenseGet->license_key = $license->license_key;
+            }
+            $licenseGet->license_type = $license->license_type;
+            if ($dayAdd->type > 0) {
+                switch ($dayAdd->type) {
+                    default:
+                        break;
+                    case (ProductTypeEnum::HOUR):
+                        $timeExpir = Carbon::parse($licenseGet->expiry_date)->addHour($dayAdd->day);
+                        break;
+                    case (ProductTypeEnum::DAY):
+                        $timeExpir = Carbon::parse($licenseGet->expiry_date)->addDay($dayAdd->day);
+                        break;
+                    case (ProductTypeEnum::WEEK):
+                        $timeExpir = Carbon::parse($licenseGet->expiry_date)->addWeek($dayAdd->day);
+                        break;
+                    case (ProductTypeEnum::MONTH):
+                        $timeExpir = Carbon::parse($licenseGet->expiry_date)->addMonth($dayAdd->day);
+                        break;
+                    case (ProductTypeEnum::YEAR):
+                        $timeExpir = Carbon::parse($licenseGet->expiry_date)->addYear($dayAdd->day);
+                        break;
+                }
+                $licenseGet->expiry_date = $timeExpir;
+            }
+            $licenseGet->save();
+            return response()->json(['message' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Fail' . $e]);
+        }
+    }
+
+    public function licenseDel(Request $request)
+    {
+        try {
+            $license = (object)$request->license;
+
+            if (Auth()->user()->user_role == 3) {
+                $licenseGet = license::find($license->id);
+            } else {
+                $authorId = Auth()->user()->id;
+                $licenseTypes = Product::where('author_id', $authorId)
+                    ->pluck('license_type')
+                    ->toArray();
+                $licenseGet = license::whereIn('license_type', $licenseTypes)
+                    ->where('id', $license->id)
+                    ->first();
+            }
+
+            $licenseGet->delete();
+            return response()->json(['message' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Fail' . $e]);
+        }
+    }
+
+    public function licenseAdd(Request $request)
+    {
+        try {
+            $data = (object)$request->license;
+            $licenseData = (object)$data->license;
+            $timeAdd = (object)$data->dayAdd;
+
+            $licenseTypes = Product::where('author_id', auth()->user()->id)
+                ->pluck('license_type')
+                ->toArray();
+            if (in_array($licenseData->license_type, $licenseTypes) || auth()->user()->user_role == 3) {
+                $license = new license();
+                $license->user_id = $licenseData->user_id;
+                $license->license_key = $licenseData->license_key;
+                $license->license_type = $licenseData->license_type;
+                $license->expiry_date = self::getDateAdd($timeAdd->type, $timeAdd->day);
+                $license->save();
+                return response()->json(['message' => 'Success']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Fail' . $e->getMessage()]);
+        }
+    }
+
+    public static function getDateAdd($type, $quan)
+    {
+        $timeExpir = null;
+        switch ($type) {
+
+            default:
+                break;
+            case (ProductTypeEnum::HOUR):
+                $timeExpir = Carbon::now()->addHour($quan);
+                break;
+            case (ProductTypeEnum::DAY):
+                $timeExpir = Carbon::now()->addDay($quan);
+                break;
+            case (ProductTypeEnum::WEEK):
+                $timeExpir = Carbon::now()->addWeek($quan);
+                break;
+            case (ProductTypeEnum::MONTH):
+                $timeExpir = Carbon::now()->addMonth($quan);
+                break;
+            case (ProductTypeEnum::YEAR):
+                $timeExpir = Carbon::now()->addYear($quan);
+                break;
+        }
+        return $timeExpir;
+    }
+
     public static function convertLinkToJson($string)
     {
         $linkArray = explode(',', $string);

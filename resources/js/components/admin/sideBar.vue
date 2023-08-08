@@ -31,8 +31,15 @@
                         <font-awesome-icon :icon="['fas', 'users']" />
                         <span class="ml-3">users</span>
                     </router-link>
+                </li>
 
-
+                <li>
+                    <router-link :to="{ name: 'admin.license' }"
+                        class="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                        :class="{ 'bg-gray-100': $route.name === 'admin.license' }">
+                        <font-awesome-icon :icon="['fas', 'gamepad']" />
+                        <span class="ml-3">license</span>
+                    </router-link>
                 </li>
                 <!-- <li>
                     <button @click="toggleMenuProduct" type="button"

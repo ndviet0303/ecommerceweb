@@ -1,10 +1,10 @@
 const user = [
     {
-        path: "/",
+        path: "",
         component: () => import("../../layouts/default.vue"),
         children: [
             {
-                path: "/",
+                path: "",
                 name: "Home",
                 component: () => import("../../pages/users/index.vue"),
             }

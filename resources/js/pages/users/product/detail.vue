@@ -16,12 +16,12 @@
             </button>
 
 
-            <div id="information_tool" v-if="product.product_information !== null">
+            <div id="information_tool" v-if="product.product_description !== null">
                 <h1 class="text-center font-bold capitalize text-3xl">
                     một số thông tin của tool
                 </h1>
                 <span>
-                    {{ product.product_information }}
+                    {{ product.product_description }}
                 </span>
             </div>
 
@@ -29,12 +29,18 @@
                 <h1 class="text-center font-bold capitalize text-3xl">
                     một số hình ảnh tool
                 </h1>
+                <img v-for="(img, index) in JSON.parse(product.product_img)" :key="index" :src="img"
+                    alt="Image Description" />
             </div>
 
             <div id="vid_tool" v-if="product.product_vid !== null">
                 <h1 class="text-center font-bold capitalize text-3xl">
                     một số video tool
                 </h1>
+                <div v-for="(youtubeUrl, index) in JSON.parse(product.product_vid)" :key="index">
+                    <iframe v-if="validateUrl(youtubeUrl)" width="560" height="315" :src="youtubeUrl" frameborder="0"
+                        allowfullscreen></iframe>
+                </div>
             </div>
         </div>
         <div v-else>
@@ -51,10 +57,16 @@ import { useFunction } from '../../../lib/function';
 
 const store = useStore();
 const route = useRoute();
-const { getExpirType }  = useFunction();
+const { getExpirType } = useFunction();
 const product = ref(null);
 const loading = ref(true);
 const productType = ref(null);
+
+function validateUrl(inputUrl) {
+    const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+    const isValidUrl = urlPattern.test(inputUrl);
+    return isValidUrl;
+}
 fetch("/api/product/" + route.params.id)
     .then((response) => response.json())
     .then((data) => {

@@ -53,21 +53,27 @@ class funcController extends Controller
 
                 if ($timeExpir == null) {
                     for ($i = 0; $i < $objPrd->quantity; $i++) {
-                        $productNew = new license();
-                        $productNew->user_id = auth()->user()->id;
-                        $productNew->license_key = '';
-                        $productNew->license_type = $product->license_type;
-                        $productNew->expiry_date = $timeExpir;
-                        $productNew->save();
+                        $license = new license();
+                        $license->user_id = auth()->user()->id;
+                        $license->license_key = '';
+                        $license->license_type = $product->license_type;
+                        $license->expiry_date = $timeExpir;
+                        $license->save();
+
+                        $product->product_bought++;
+                        $product->save();
                     }
                     return response()->json(['message' => 'Success']);
                 } else {
-                    $productNew = new license();
-                    $productNew->user_id = auth()->user()->id;
-                    $productNew->license_key = '';
-                    $productNew->license_type = $product->license_type;
-                    $productNew->expiry_date = $timeExpir;
-                    $productNew->save();
+                    $license = new license();
+                    $license->user_id = auth()->user()->id;
+                    $license->license_key = '';
+                    $license->license_type = $product->license_type;
+                    $license->expiry_date = $timeExpir;
+                    $license->save();
+
+                    $product->product_bought++;
+                    $product->save();
                     return response()->json(['message' => 'Success']);
                 }
             }

@@ -38,9 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/user', [AuthController::class, 'user']);
     Route::post('/paid', [funcController::class, 'paid']);
-    Route::get('/license',[licenseController::class,'licenseShow']);
-    Route::post('/license/change',[licenseController::class,'licenseChange']);
-    Route::post('/license/extend',[licenseController::class,'licenseExtend']);
+    Route::get('/license', [licenseController::class, 'licenseShow']);
+    Route::post('/license/change', [licenseController::class, 'licenseChange']);
+    Route::post('/license/extend', [licenseController::class, 'licenseExtend']);
+    Route::post('/search/{name}', [funcController::class, 'search']);
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('products', [AdminController::class, 'products']);

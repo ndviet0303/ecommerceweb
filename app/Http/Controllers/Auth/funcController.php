@@ -59,10 +59,9 @@ class funcController extends Controller
                         $license->license_type = $product->license_type;
                         $license->expiry_date = $timeExpir;
                         $license->save();
-
-                        $product->product_bought++;
-                        $product->save();
                     }
+                    $product->product_bought += $objPrd->quantity;
+                    $product->save();
                     return response()->json(['message' => 'Success']);
                 } else {
                     $license = new license();
@@ -72,7 +71,7 @@ class funcController extends Controller
                     $license->expiry_date = $timeExpir;
                     $license->save();
 
-                    $product->product_bought++;
+                    $product->product_bought += $objPrd->quantity;
                     $product->save();
                     return response()->json(['message' => 'Success']);
                 }

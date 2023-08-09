@@ -13,7 +13,8 @@ import product from "./admin/product";
 import users from './admin/users';
 import Home from './users/index.js'
 import license from './users/license';
-import adminLicense from './admin/license'
+import adminLicense from './admin/license';
+import search from './users/search';
 import axios from 'axios';
 import { useStore } from 'vuex';
 
@@ -32,7 +33,8 @@ const routes = [
     ...users,
     ...Home,
     ...license,
-    ...adminLicense
+    ...adminLicense,
+    ...search,
 ];
 
 const router = createRouter({

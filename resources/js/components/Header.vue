@@ -60,10 +60,10 @@
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                         </div>
-                        <input type="search" id="default-search"
+                        <input type="search" id="default-search" v-model="nameTool"
                             class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
                             placeholder="Tìm Tên Tool" required>
-                        <button type="submit"
+                        <button type="submit" @click="SendSearch"
                             class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Tìm</button>
                     </div>
                 </div>
@@ -103,11 +103,6 @@
                                 :class="{ 'md:text-blue-500 bg-blue-600 md:bg-transparent': $route.name === 'deposit' }">Nạp
                                 Tiền</router-link>
                         </li>
-                        <li>
-                            <a href="#"
-                                class="block py-2 pl-3 pr-4 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent">Liên
-                                Hệ</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -129,6 +124,11 @@ export default {
         // user = computed(() => store.getters['']);
         const isAuthorized = computed(() => store.getters['isAuthenticated']);
         const cartItemCount = computed(() => store.getters['cartItemCount']);
+        const nameTool = ref("");
+
+        function SendSearch() {
+            router.push({ name: 'search', params: { name: nameTool.value } });
+        }
         const logout = async () => {
             if (isAuthorized.value) {
                 axios.post('/api/logout', {}, {
@@ -168,7 +168,9 @@ export default {
             user,
             isAuthorized,
             logout,
-            cartItemCount
+            cartItemCount,
+            SendSearch,
+            nameTool
         };
     },
     computed: {

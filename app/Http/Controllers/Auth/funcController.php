@@ -82,4 +82,16 @@ class funcController extends Controller
     {
         return ProductTypeEnum::getArrayView();
     }
+
+    public function search($nameTool)
+    {
+        $products = Product::where("is_show", 1)
+            ->where('product_name', 'LIKE', "%{$nameTool}%")
+            ->get();
+
+        return [
+            'products' => $products,
+            'enumExpir' =>  ProductTypeEnum::getArrayView(),
+        ];
+    }
 }

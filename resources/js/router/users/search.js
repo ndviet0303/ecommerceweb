@@ -4,7 +4,7 @@ const user = [
         component: () => import("../../layouts/default.vue"),
         children: [
             {
-                path: "/search/:id",
+                path: "/search/:name",
                 name: "search",
                 component: () => import("../../pages/users/search.vue"),
             }

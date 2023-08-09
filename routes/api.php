@@ -32,6 +32,7 @@ Route::get("/product/{id}", [ProductController::class, 'productInfo']);
 Route::get("/getProductType", [funcController::class, 'getProductType']);
 Route::post("/register", [registerController::class, 'register']);
 Route::post("/login", [loginController::class, 'login']);
+Route::get('/search/{name}', [funcController::class, 'search']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/check-login', [loginController::class, 'checkLogin']);
     Route::post('/logout', [loginController::class, 'logout']);
@@ -41,7 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/license', [licenseController::class, 'licenseShow']);
     Route::post('/license/change', [licenseController::class, 'licenseChange']);
     Route::post('/license/extend', [licenseController::class, 'licenseExtend']);
-    Route::post('/search/{name}', [funcController::class, 'search']);
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('products', [AdminController::class, 'products']);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\funcController;
 use App\Http\Controllers\Auth\loginController;
 use App\Http\Controllers\Auth\registerController;
+use App\Http\Controllers\DepositController;
 use App\Http\Controllers\licenseController;
 
 /*
@@ -33,7 +34,9 @@ Route::get("/getProductType", [funcController::class, 'getProductType']);
 Route::post("/register", [registerController::class, 'register']);
 Route::post("/login", [loginController::class, 'login']);
 Route::get('/search/{name}', [funcController::class, 'search']);
+Route::get('/deposit/IPN',[DepositController::class,"IPN"]);
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/deposit',[DepositController::class,"Pay"]);
     Route::get('/check-login', [loginController::class, 'checkLogin']);
     Route::post('/logout', [loginController::class, 'logout']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);

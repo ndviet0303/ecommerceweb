@@ -7,6 +7,7 @@ const user = [
                 path: "/naptien",
                 name: "deposit",
                 component: () => import("../../pages/func/deposit.vue"),
+                meta: { requiresAuth: true }
             }
         ]
     }

@@ -1,0 +1,1 @@
+import{_ as t,a as n,c as a,j as e,d as r,w as s,F as c,b as _,o as l}from"./app-47f6bd4e.js";const d={},u=_("br",null,null,-1);function m(f,i){const o=n("router-link");return l(),a(c,null,[e(" 404 not found "),u,r(o,{to:{name:"Home"}},{default:s(()=>[e("Trở Về Trang Chủ")]),_:1})],64)}const x=t(d,[["render",m]]);export{x as default};

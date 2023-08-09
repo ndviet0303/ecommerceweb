@@ -1,0 +1,1 @@
+function u(){function i(t,e){return Object.keys(e).find(n=>e[n]===t)||"Không xác định"}return{getExpirType:i,formatDateTime:t=>{const e={year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"};return new Date(t).toLocaleString(void 0,e)},truncateText:(t,e)=>t.length>e?t.slice(0,e)+"...":t}}export{u};

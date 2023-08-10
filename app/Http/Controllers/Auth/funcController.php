@@ -25,9 +25,9 @@ class funcController extends Controller
         foreach ($dataCart as $cartPrd) {
             $objPrd = (object)($cartPrd);
             $product = Product::find($objPrd->id);
-            if ($user_cash >= $product->product_price) {
+            if ($user_cash >= $product->product_price * $objPrd->quantity) {
 
-                $user->cash -= $product->product_price;
+                $user->cash -= $product->product_price * $objPrd->quantity;
                 $user->save();
 
                 $timeExpir = null;

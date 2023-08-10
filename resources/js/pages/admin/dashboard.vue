@@ -1,5 +1,5 @@
 <template>
-    <div class="px-4 pt-6">
+    <!-- <div class="px-4 pt-6">
         <div class="grid w-full grid-cols-4 gap-4 mt-4">
             <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex ">
                 <div class="w-full">
@@ -20,5 +20,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+    
 </template>

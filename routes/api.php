@@ -35,6 +35,7 @@ Route::post("/register", [registerController::class, 'register']);
 Route::post("/login", [loginController::class, 'login']);
 Route::get('/search/{name}', [funcController::class, 'search']);
 Route::get('/deposit/IPN',[DepositController::class,"IPN"]);
+Route::post('/auth',[licenseController::class,"auth"]);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/deposit',[DepositController::class,"Pay"]);
     Route::get('/check-login', [loginController::class, 'checkLogin']);

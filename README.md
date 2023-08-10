@@ -1,11 +1,11 @@
 project em tham khảo khá nhiều nguồn:
 template,ytb,chatgpt
 
-tài khoản Test
-tk mk
-member: member@gmail.com member
-ctv : ctv@gmail.com ctv
-admin : admin@gmail.com admin
+tài khoản Test<br>
+tk mk <br>
+member: member@gmail.com member<br>
+ctv : ctv@gmail.com ctv<br>
+admin : admin@gmail.com admin<br>
 
 thẻ Test nạp tiền
 

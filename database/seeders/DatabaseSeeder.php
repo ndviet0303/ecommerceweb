@@ -25,12 +25,34 @@ class DatabaseSeeder extends Seeder
             'name' => 'Tool Game X',
         ]]);
 
+
         DB::table('users')->insert([
-            'name' => 'admin',
-            'email' => 'zietcute@gmail.com',
-            'cash' => 5000000,
-            'password' => bcrypt('zietkk1234'),
-            'user_role' => 1,
+            //member
+            [
+                'name' => 'member',
+                'email' => 'member@gmail.com',
+                'cash' => 5000000,
+                'password' => bcrypt('member'),
+                'user_role' => 1,
+            ],
+            //ctv
+            [
+                'name' => 'ctv',
+                'email' => 'ctv@gmail.com',
+                'cash' => 5000000,
+                'password' => bcrypt('ctv'),
+                'user_role' => 2,
+            ],
+            //admin
+            [
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'cash' => 5000000,
+                'password' => bcrypt('admin'),
+                'user_role' => 3,
+            ]
         ]);
+
+        
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Enums\ProductTypeEnum;
 use phpseclib\Crypt\RSA;
+
 class licenseController extends Controller
 {
     public function licenseShow()
@@ -148,5 +149,15 @@ class licenseController extends Controller
         $pass_aes = substr(hash('sha256', $password, true), 0, 32);
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         return base64_encode(openssl_encrypt("true|" . $password . "|" . $key_detail->expiry_date, $method, $pass_aes, OPENSSL_RAW_DATA, $iv));
+    }
+
+    public function Download(Request $request)
+    {
+        $license =  (object)$request->license;
+
+        $link = Product::where('license_type', $license->license_type)
+            ->where('is_show', 1)
+            ->first();
+        return $link->download_url;
     }
 }

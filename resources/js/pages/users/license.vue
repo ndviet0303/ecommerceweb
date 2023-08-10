@@ -40,8 +40,11 @@
                         <td class="px-6 py-4">
                             <ButtonColor :class="`bg-green-400 hover:bg-green-600 focus:ring-4 focus:ring-green-300`"
                                 @click="ModalChange(license)" label="Sửa" />
-                            <ButtonColor v-if="license.expiry_date !== null" :class="`bg-teal-400 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300`"
+                            <ButtonColor v-if="license.expiry_date !== null"
+                                :class="`bg-teal-400 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300`"
                                 @click="ModalExtend(license)" label="Gia Hạn" />
+                            <ButtonColor :class="`bg-violet-400 hover:bg-violet-600 focus:ring-4 focus:ring-violet-300`"
+                                @click="Download(license)" label="Tải Về" />
                         </td>
                     </tr>
                 </tbody>
@@ -125,6 +128,16 @@ function ModalChange(license) {
 function ModalExtend(license) {
     isModalExtend.value = true;
     licenseSave.value = license
+}
+
+async function Download(license) {
+    try {
+        const response = await axios.post('api/download', { license });
+        window.location.href = response.data;
+    }
+    catch (error) {
+
+    }
 }
 
 async function SendLicenseExtend() {

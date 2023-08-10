@@ -4,7 +4,7 @@
 
 @layer components {
     * {
-        font-family: 'Roboto', cursive;
+        font-family: 'Roboto', sans-serif;
     }
 
     .header-top {
